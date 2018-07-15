@@ -1,2 +1,24 @@
-node_modules
 .DS_Store
+
+# dependencies
+/node_modules
+/client/node_modules
+
+# testing
+/client/coverage
+
+# production
+
+
+# misc
+/client/.DS_Store
+/client/.env.local
+/client/.env.development.local
+/client/.env.test.local
+/client/.env.production.local
+
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
+
+uncontrolled/
