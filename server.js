@@ -20,6 +20,9 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
+
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/chessclub")
+
 app.listen(PORT, () => {
   console.log(`🌎 ==> Server now on port ${PORT}!`);
 });
