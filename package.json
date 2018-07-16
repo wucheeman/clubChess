@@ -1,7 +1,7 @@
 {
-  "name": "clubChess",
+  "name": "mern",
   "version": "1.0.0",
-  "description": "App for local chess clubs",
+  "description": "Mern Demo",
   "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
@@ -19,9 +19,17 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "bcrypt-nodejs": "^0.0.3",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "express": "^4.15.4",
     "if-env": "^1.0.4",
-    "mongoose": "^5.2.3"
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.3",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "react-router-dom": "^4.3.1"
   }
 }
