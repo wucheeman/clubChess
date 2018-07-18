@@ -12,7 +12,8 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Connect to the Mongo DB
-mongoose.connect('mongodb://localhost/chessclubdb', { promiseLibrary: require('bluebird') })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/chessclubdb',
+                  { promiseLibrary: require('bluebird') })
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 
