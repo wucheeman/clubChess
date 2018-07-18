@@ -8,16 +8,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      players: []
+      users: []
     };
   }
 
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-    axios.get('/api/player')
+    axios.get('/api/user')
       .then(res => {
-        this.setState({ players: res.data });
-        console.log(this.state.players);
+        this.setState({ users: res.data });
+        console.log(this.state.users);
       })
       .catch((error) => {
         if(error.response.status === 401) {
@@ -48,17 +48,17 @@ class App extends Component {
               <thead>
                 <tr>
                   <th>Status</th>
-                  <th>Title</th>
+                  <th>Username</th>
                   <th>Future Growth</th>
                 </tr>
               </thead>
               <tbody>
-                {this.state.players.map(player =>
+                {this.state.users.map(user =>
                   <tr>
-                    {/* TODO: convert to opening game room to play that player */}
-                    <td><Link to={`/show/${player._id}`}>{player.status}</Link></td>
-                    <td>{player.name}</td>
-                    <td>{player.status}</td>
+                    {/* TODO: convert to opening game room to play that user */}
+                    <td><Link to={`/show/${user._id}`}>{user.status}</Link></td>
+                    <td>{user.username}</td>
+                    <td>TBD</td>
                   </tr>
                 )}
               </tbody>

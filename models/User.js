@@ -11,6 +11,13 @@ var UserSchema = new Schema({
   password: {
         type: String,
         required: true
+    },
+  name: {
+        type: String,
+    },
+  status: {
+        type: String,
+        default: "Available"
     }
 });
 

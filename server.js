@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = require('bluebird');
 var logger = require('morgan');
 
-var player = require('./routes/player');
+var user = require('./routes/user');
 var auth = require('./routes/auth');
 
 const PORT = process.env.PORT || 3001;
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Define API routes here
-app.use('/api/player', player);
+app.use('/api/user', user);
 app.use('/api/auth', auth);
 
 
