@@ -5,7 +5,7 @@ require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
-var User = require("../models/Ugser");
+var User = require("../models/User");
 
 // register new user
 router.post('/register', function(req, res) {
