@@ -64,6 +64,7 @@ class App extends Component {
               </tbody>
             </table>
           </div>
+          <a href="/gameroom.html">Play Chess</a>
         </div>
       </div>
     );

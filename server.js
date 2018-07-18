@@ -44,7 +44,18 @@ app.use('/api/auth', auth);
 //   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 // });
 
-
-app.listen(PORT, () => {
-  console.log(`🌎 ==> Server now on port ${PORT}!`);
+// socket.io config
+/////////////////////////////////////////////
+// required for socket.io to work
+var http = require('http').Server(app);
+// //  initialize new instance of socket.io by passing the HTTP server object
+var io = require('socket.io')(http);
+require("./ioStuff.js")(io);
+// must be http, not app
+http.listen(PORT, function(){
+  console.log(`http now on port ${PORT}!`);
 });
+
+// app.listen(PORT, () => {
+//   console.log(`🌎 ==> Server now on port ${PORT}!`);
+// });

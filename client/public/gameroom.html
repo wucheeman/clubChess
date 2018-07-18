@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Exploring Chess</title>
+      <!-- path must be relative to root/public -->
+      <link href="css/chat.css" rel="stylesheet" type="text/css" media="all" />
+      <link rel="stylesheet" href="lib/chessboard-0.3.0.min.css" type="text/css" media="all" />
+      <!-- Removing this library from use -->
+      <!-- <link rel="stylesheet" href="lib/WinJS.4.0/css/ui-light.css" type="text/css" media="all" /> -->
+      <link rel="stylesheet" href="css/default.css" type="text/css" media="all" />
+  </head>
+  <body>
+
+    <div class="page login" id='page-login'>
+      <h1>Exploring Chess</h1>
+      <div class='logo'></div>
+      <input id='username'></input>
+      <button id='login'>Login</button>
+    </div>
+
+    <div class="page lobby" id='page-lobby'>
+      <h1>Chess Club Lobby</h1>
+      <h2 id='userLabel'></h2>
+      <h3>Active games</h3>
+      <div id='gamesList'>
+        No active games
+      </div>
+      <h3>Online players</h3>
+        <div id='userList'>
+          No users online
+      </div>
+    </div>
+
+    <div class="page game" id='page-game'>
+      <button id='game-back'>Back</button>
+      <button id='game-resign'>Resign</button>
+      <div id='game-board' style="width: 400px">
+      </div>
+    </div>
+
+<!-- from chat app -->
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+
+    <!-- Loads a socket.io-client -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!-- path must be relative to root/public -->
+
+    <!-- for chat app -->
+    <!-- <script src="js/chat.js" ></script> -->
+
+    <!-- for chess app -->
+    <script src="lib/chessboard-0.3.0.min.js"></script> 
+    <script src="lib/chess.min.js"></script> 
+    <script src="js/default.js"></script>
+
+  </body>
+</html>
+
