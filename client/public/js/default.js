@@ -1,6 +1,7 @@
 $(function () {
   var socket = io();
   var username;
+  var opponentname;
   var usersOnline = [];
   var myGames = [];
   var playerColor;
@@ -8,12 +9,27 @@ $(function () {
   var game;
   var board;
 
-  // from chat app -- to be built out after MVP
-  $('form').submit(function(){
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
-    return false;
-  });
+    $(document).ready(function(){
+        console.log('doc is ready');
+        var playerNames = []
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) {
+          var sParameterName = sURLVariables[i].split('=');
+          playerNames.push(sParameterName[1]);
+        }
+        username = playerNames[0];
+        opponentname = playerNames[1];
+        console.log(username, opponentname);
+        // username = localStorage.getItem('username');
+        socket.emit('login', username);
+        
+        $('#page-login').hide();
+        $('#page-lobby').show();
+   });
+
+
+
 
   //////////////////////////////
   // Menus

@@ -46,7 +46,7 @@ class App extends Component {
                 <button class="btn btn-primary" onClick={this.logout}>Logout</button>
               }
             </h3>
-            <h6> 
+            <h6>
               Welcome to {localStorage.getItem('username')}!
             </h6>
           </div>
@@ -71,7 +71,7 @@ class App extends Component {
               </tbody>
             </table>
           </div>
-          <a href="/gameroom.html">Play Chess</a>
+          <a href={"/gameroom.html?username=" + localStorage.getItem('username') + "&opponentname=frodo@baggins.com"}>Play Chess</a>
         </div>
       </div>
     );
