@@ -107,6 +107,20 @@ var activeGames = {};
       socket.broadcast.emit('resign', msg);
     });
 
+
+    socket.on('leave-room', function(msg){
+      console.log('user left room');
+
+      console.log(msg);
+            
+      delete lobbyUsers[socket.userId];
+      socket.broadcast.emit('leavelobby', socket.userId);
+      // socket.broadcast.emit('logout', {
+      //   userId: socket.userId,
+      //   gameId: socket.gameId
+      // });
+    });
+
   // TODO: fix bug # 1
     // this logs when page refreshes or user closes the page
     socket.on('disconnect', function(msg){

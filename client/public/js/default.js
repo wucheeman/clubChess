@@ -67,6 +67,12 @@ $(function () {
     $('#page-lobby').show();
   });
 
+  $('#game-back').on('click', function() {
+    console.log('in game-back');
+    socket.emit('leave-room', username);
+    window.location.href = "/";
+  });
+
   var addUser = function(userId) {
     console.log('in addUser');
     usersOnline.push(userId);
@@ -161,7 +167,7 @@ $(function () {
 
   //  TODO: fix bug #1
   socket.on('logout', function (msg) {
-    console.log('got user logout message');
+    console.log('got user logout message re '+ msg.username);
     removeUser(msg.username);
   });
 
