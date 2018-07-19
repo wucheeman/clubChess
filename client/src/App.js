@@ -14,12 +14,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+    axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtToken');
     //console.log(localStorage.getItem('username'));
     //console.log('in componentDidMount');
     axios.get('/api/user')
       .then(res => {
-        this.setState({username: localStorage.getItem('username')});
+        this.setState({username: sessionStorage.getItem('username')});
         this.setState({ users: res.data });
         console.log(this.state.users);
       })
@@ -31,7 +31,7 @@ class App extends Component {
   }
 
   logout = () => {
-    localStorage.removeItem('jwtToken');
+    sessionStorage.removeItem('jwtToken');
     window.location.reload();
   }
 
@@ -42,12 +42,12 @@ class App extends Component {
           <div class="panel-heading">
             <h3 class="panel-title">
               CLUB LOBBY &nbsp;
-              {localStorage.getItem('jwtToken') &&
+              {sessionStorage.getItem('jwtToken') &&
                 <button class="btn btn-primary" onClick={this.logout}>Logout</button>
               }
             </h3>
             <h6>
-              Welcome to {localStorage.getItem('username')}!
+              Welcome to {sessionStorage.getItem('username')}!
             </h6>
           </div>
           <div class="panel-body">
@@ -71,7 +71,7 @@ class App extends Component {
               </tbody>
             </table>
           </div>
-          <a href={"/gameroom.html?username=" + localStorage.getItem('username') + "&opponentname=frodo@baggins.com"}>Play Chess</a>
+          <a href={"/gameroom.html?username=" + sessionStorage.getItem('username') + "&opponentname=frodo@baggins.com"}>Play Chess</a>
         </div>
       </div>
     );

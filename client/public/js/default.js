@@ -12,16 +12,17 @@ $(function () {
     $(document).ready(function(){
         console.log('doc is ready');
         var playerNames = []
-        var sPageURL = window.location.search.substring(1);
-        var sURLVariables = sPageURL.split('&');
-        for (var i = 0; i < sURLVariables.length; i++) {
-          var sParameterName = sURLVariables[i].split('=');
-          playerNames.push(sParameterName[1]);
-        }
-        username = playerNames[0];
-        opponentname = playerNames[1];
-        console.log(username, opponentname);
-        // username = localStorage.getItem('username');
+        // var sPageURL = window.location.search.substring(1);
+        // var sURLVariables = sPageURL.split('&');
+        // for (var i = 0; i < sURLVariables.length; i++) {
+        //   var sParameterName = sURLVariables[i].split('=');
+        //   playerNames.push(sParameterName[1]);
+        // }
+        // username = playerNames[0];
+        // opponentname = playerNames[1];
+        // console.log(username, opponentname);
+        username = sessionStorage.getItem('username');
+        console.log(username);
         socket.emit('login', username);
         
         $('#page-login').hide();
