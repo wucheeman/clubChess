@@ -29,20 +29,17 @@
         <div id='userList'>
           No users online
       </div>
+      <div class="leave-room" id='leave-room'>
+        <button id='game-back'>Back to Lobby</button>
+      </div>
     </div>
 
     <div class="page game" id='page-game'>
-      <button id='game-back'>Back</button>
+      <button id='game-over'>Game Over</button>
       <button id='game-resign'>Resign</button>
       <div id='game-board' style="width: 400px">
       </div>
     </div>
-
-<!-- from chat app -->
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
 
     <!-- Loads a socket.io-client -->
     <script src="/socket.io/socket.io.js"></script>

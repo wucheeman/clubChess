@@ -48,9 +48,10 @@ $(function () {
     } 
   });
 
-  // User wants to return to lobby and find another game
-  // TODO: improve element's ID so it makes more sense!!!
-  $('#game-back').on('click', function() {
+  // Game is over so player returns to game room
+  $('#game-over').on('click', function() {
+    // TODO: improve this kludge
+    socket.emit('resign', {userId: username, gameId: serverGame.id});
     socket.emit('login', username);
 
     $('#page-game').hide();
