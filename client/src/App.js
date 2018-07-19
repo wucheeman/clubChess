@@ -8,14 +8,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: []
+      users: [],
+      username: ''
     };
   }
 
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+    //console.log(localStorage.getItem('username'));
+    //console.log('in componentDidMount');
     axios.get('/api/user')
       .then(res => {
+        this.setState({username: localStorage.getItem('username')});
         this.setState({ users: res.data });
         console.log(this.state.users);
       })
@@ -42,6 +46,9 @@ class App extends Component {
                 <button class="btn btn-primary" onClick={this.logout}>Logout</button>
               }
             </h3>
+            <h6> 
+              Welcome to {localStorage.getItem('username')}!
+            </h6>
           </div>
           <div class="panel-body">
             <table class="table table-stripe">
