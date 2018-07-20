@@ -22,3 +22,5 @@
 /client/yarn-error.log*
 
 uncontrolled/
+client/src/App.js.bak
+
