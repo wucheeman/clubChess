@@ -72,7 +72,8 @@ class Lobby extends Component {
             </table>
           </div>
           {/* return <img src={process.env.PUBLIC_URL + '/img/logo.png'} />; */}
-          <a href={process.env.PUBLIC_URL + "/gameroom.html"}>DA Game Room</a>
+          {/* {console.log('typeof public url is: ' + typeof process.env.PUBLIC_URL)} */}
+          <a href="./gameroom.html">Game Room</a>
         </div>
       </div>
     );
