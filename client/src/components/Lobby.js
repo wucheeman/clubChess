@@ -71,8 +71,8 @@ class Lobby extends Component {
               </tbody>
             </table>
           </div>
-          {/* <a href={"/gameroom.html?username=" + sessionStorage.getItem('username') + "&opponentname=frodo@baggins.com"}>Play Chess</a> */}
-          <a href={"/gameroom.html"}>Game Room</a>
+          {/* return <img src={process.env.PUBLIC_URL + '/img/logo.png'} />; */}
+          <a href={process.env.PUBLIC_URL + "/gameroom.html"}>DA Game Room</a>
         </div>
       </div>
     );
