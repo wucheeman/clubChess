@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = require('bluebird');
 var logger = require('morgan');
 
-var player = require('./routes/player');
+var user = require('./routes/user');
 var auth = require('./routes/auth');
 
 const PORT = process.env.PORT || 3001;
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Define API routes here
-app.use('/api/player', player);
+app.use('/api/user', user);
 app.use('/api/auth', auth);
 
 
@@ -44,7 +44,18 @@ app.use('/api/auth', auth);
 //   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 // });
 
-
-app.listen(PORT, () => {
-  console.log(`🌎 ==> Server now on port ${PORT}!`);
+// socket.io config
+/////////////////////////////////////////////
+// required for socket.io to work
+var http = require('http').Server(app);
+// //  initialize new instance of socket.io by passing the HTTP server object
+var io = require('socket.io')(http);
+require("./ioStuff.js")(io);
+// must be http, not app
+http.listen(PORT, function(){
+  console.log(`http now on port ${PORT}!`);
 });
+
+// app.listen(PORT, () => {
+//   console.log(`🌎 ==> Server now on port ${PORT}!`);
+// });
