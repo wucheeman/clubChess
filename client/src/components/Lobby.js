@@ -71,9 +71,9 @@ class Lobby extends Component {
               </tbody>
             </table>
           </div>
-          {/* return <img src={process.env.PUBLIC_URL + '/img/logo.png'} />; */}
-          {/* {console.log('typeof public url is: ' + typeof process.env.PUBLIC_URL)} */}
-          <a href="./gameroom.html">Game Room</a>
+          <Link to="/gameroom">
+            Game Room
+          </Link>
         </div>
       </div>
     );
