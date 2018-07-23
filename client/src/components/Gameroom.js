@@ -112,6 +112,7 @@ export default class Gameroom extends React.Component {
     // const newGame = new Chess();
         // this.setState({game: newGame});
     this.setState({game: new Chess()});
+    this.toggleVisibilty();
 
 
     // var cfg = {
@@ -143,6 +144,7 @@ export default class Gameroom extends React.Component {
       console.log('GAME OVER!!!');
       return;
     }
+    // don't think these are needed
     // (this.state.game.turn() === 'w' && piece.search(/^b/) !== -1) ||
     // (this.state.game.turn() === 'b' && piece.search(/^w/) !== -1) ||
     if (this.state.game.turn() !== this.state.playerColor[0]) return;
