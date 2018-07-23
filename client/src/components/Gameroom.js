@@ -94,6 +94,19 @@ export default class Gameroom extends React.Component {
       }
     }
 
+    this.socket.on('resign', function(msg) {
+      console.log('got resign broadcast');
+      handleResign(msg);
+    });
+
+    const handleResign = (data) => {
+      if (data.gameId == this.state.serverGame.id) {
+        this.socket.emit('login', this.state.username);
+        this.toggleVisibilty();
+      }
+    }
+
+
   } // end of constructor
 
   componentDidMount() {
@@ -176,6 +189,14 @@ export default class Gameroom extends React.Component {
                    gameVisibility: !this.state.gameVisibility})
   }
 
+
+  handleOverClick() {
+    console.log('handling game over click');
+    this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame.id});
+    this.socket.emit('login', this.state.username);
+    this.toggleVisibilty();
+  }
+
   render() {
     return (
       <div className='containerpage'>
@@ -201,8 +222,7 @@ export default class Gameroom extends React.Component {
         {this.state.gameVisibility ? 
           <div className="page game" id='page-game'>
             <div className='gameButtons'>
-              <button id='game-back'>Back</button>
-              <button id='game-resign'>Resign</button>
+              <button id='game-back' onClick={() => this.handleOverClick()}>Game Over/Resign</button>
             </div>
             <div style={boardsContainer}>
               <Chessboard
