@@ -5,7 +5,7 @@ var lobbyUsers = {};
 var activeGames = {};
 
   io.on('connection', function(socket){
-    console.log('a user connected');
+    console.log('a user connected via socket.io');
     socket.on('chat message', function(msg) {
       console.log('message: ' + msg);
       // io.emit('chat message', msg);
