@@ -55,7 +55,7 @@ class Lobby extends Component {
               <thead>
                 <tr>
                   <th>Status</th>
-                  <th>Username</th>
+                  <th>UserID</th>
                   <th>Future Growth</th>
                 </tr>
               </thead>

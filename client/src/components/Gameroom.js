@@ -46,7 +46,7 @@ export default class Gameroom extends React.Component {
     return (
       <div class="page gameroom" id='page-gameroom'>
       <h1>Game Room</h1>
-        <h2 id='userLabel'></h2>
+        <h4 id='userLabel'>Good playing, {this.state.username}</h4>
         <h3>Active games</h3>
         <div id='gamesList'>
           No active games
