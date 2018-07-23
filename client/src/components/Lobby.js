@@ -37,21 +37,21 @@ class Lobby extends Component {
 
   render() {
     return (
-      <div class="container">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
+      <div className="container">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">
               CLUB LOBBY &nbsp;
               {sessionStorage.getItem('jwtToken') &&
-                <button class="btn btn-primary" onClick={this.logout}>Logout</button>
+                <button className="btn btn-primary" onClick={this.logout}>Logout</button>
               }
             </h3>
             <h6>
               Welcome to {sessionStorage.getItem('username')}!
             </h6>
           </div>
-          <div class="panel-body">
-            <table class="table table-stripe">
+          <div className="panel-body">
+            <table className="table table-stripe">
               <thead>
                 <tr>
                   <th>Status</th>
