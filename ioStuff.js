@@ -47,6 +47,7 @@ var activeGames = {};
       
       var game = {
           id: Math.floor((Math.random() * 100) + 1),
+          // TODO: delete this?
           board: null, 
           users: {white: socket.userId, black: opponentId}
       };
@@ -92,8 +93,9 @@ var activeGames = {};
     });
 
     socket.on('move', function(msg) {
+      console.log('got the move emission');
       socket.broadcast.emit('move', msg);
-      activeGames[msg.gameId].board = msg.board;
+      activeGames[msg.gameId].position = msg.position;
       console.log(msg);
     });
 

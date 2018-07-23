@@ -17,14 +17,13 @@ export default class Gameroom extends React.Component {
         playerColor: '',
         serverGame: {},
         game: {},
-        board: {},
+        // no need for this with Chessboard component ?
+        // board: {},
         orientation: '',
         position: '',
     };
 
     this.socket = io('localhost:3000');
-
-    
 
     this.login = () => {
       this.socket.emit('login', this.state.username);
@@ -75,6 +74,20 @@ export default class Gameroom extends React.Component {
       this.initGame(data.game);
     }
 
+    // this updates chess.js and chessboard.js
+    this.socket.on('move', function (msg) {
+      console.log('got move broadcast');
+      updateGame(msg);
+    });
+
+    const updateGame = (data) => {
+      console.log(data);
+      if (this.state.serverGame && data.gameId ===   this.state.serverGame.id) {
+        this.state.game.move(data.move);
+        let position = this.state.game.fen()
+        this.setState({ position: position });
+      }
+    }
 
   } // end of constructor
 
@@ -91,6 +104,10 @@ export default class Gameroom extends React.Component {
 
     this.setState({position: 'start'});
     this.setState({orientation: this.state.playerColor});
+    // const newGame = new Chess();
+        // this.setState({game: newGame});
+    this.setState({game: new Chess()});
+
 
     // var cfg = {
     //   draggable: true,
@@ -109,18 +126,30 @@ export default class Gameroom extends React.Component {
 
   }
 
+  onDrop = (source, target) => {
+    // this.removeHighlightSquare();
+    console.log('in onDrop');
+    // see if the move is legal
+    var move = this.state.game.move({
+      from: source,
+      to: target,
+      promotion: "q" // NOTE: always promote to a queen for example simplicity
+    });
 
-  onDragStart = function() {
+    // illegal move
+    if (move === null) return;
 
+    console.log(this.state.game.fen);
+    let position = this.state.game.fen()
+    this.setState({ position: position });
+    // console.log('getting this.state.position');
+    console.log(this.state.position);
+    this.socket.emit('move', 
+                     {move: move,
+                      gameId: this.state.serverGame.id,
+                      position: position});
   };
 
-  onDrop = function() {
-
-  };
-
-  onSnapEnd = function() {
-
-  };
 
   render() {
     return (
