@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import io from "socket.io-client";
 import Chess from 'chess.js';
-import ChessBoard from 'chessboardjs';
+import Chessboard from "chessboardjsx";
+import HumanVsHuman from "./integrations/HumanVsHuman";
 
 export default class Gameroom extends React.Component {
 
@@ -86,19 +87,19 @@ export default class Gameroom extends React.Component {
     this.setState({serverGame: serverGameState});
     console.log(this.state.serverGame);
 
-    var cfg = {
-      draggable: true,
-      showNotation: false,
-      orientation: this.state.playerColor,
-      position: this.state.serverGame.board ? this.state.serverGame.board : 'start',
-      onDragStart: this.onDragStart,
-      onDrop: this.onDrop,
-      onSnapEnd: this.onSnapEnd
-    };
+    // var cfg = {
+    //   draggable: true,
+    //   showNotation: false,
+    //   orientation: this.state.playerColor,
+    //   position: this.state.serverGame.board ? this.state.serverGame.board : 'start',
+    //   onDragStart: this.onDragStart,
+    //   onDrop: this.onDrop,
+    //   onSnapEnd: this.onSnapEnd
+    // };
 
-    // use this.setState()?
-    this.state.game = this.state.serverGame.board ? new Chess(this.state.serverGame.board) : new Chess();
-    this.state.board = new ChessBoard('game-board', cfg);
+    // // use this.setState()?
+    // this.state.game = this.state.serverGame.board ? new Chess(this.state.serverGame.board) : new Chess();
+    // this.state.board = new ChessBoard('game-board', cfg);
 
   }
 
@@ -134,13 +135,46 @@ export default class Gameroom extends React.Component {
               </div>
             <Link to="/">Back to Lobby</Link>
         </div>
-          <div className="page game" id='page-game'>
+          {/* <div className="page game" id='page-game'>
             <button id='game-back'>Back</button>
             <button id='game-resign'>Resign</button>
             <div id='game-board' style={{width: '400px'}}>
             </div>
-          </div>
+          </div> */}
+        <div style={boardsContainer}>
+          <HumanVsHuman>
+            {({
+              position,
+              selectedSquares,
+              onDrop,
+              onMouseOverSquare,
+              onMouseOutSquare
+            }) => (
+              <Chessboard
+                id="humanVsHuman"
+                width={320}
+                position={position}
+                selectedSquares={selectedSquares}
+                onDrop={onDrop}
+                onMouseOverSquare={onMouseOverSquare}
+                onMouseOutSquare={onMouseOutSquare}
+                boardStyle={boardStyle}
+              />
+            )}
+          </HumanVsHuman>
+        </div>
       </div>
     );
   } // end of render
 }
+
+
+const boardsContainer = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center"
+};
+const boardStyle = {
+  borderRadius: "5px",
+  boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
+};
