@@ -40,7 +40,18 @@ export default class Gameroom extends React.Component {
       this.socket.emit('invite', oppenentId);
     }
 
+    this.socket.on('joinlobby', function(newUser) {
+      console.log(`${newUser} is joining the gameroom`);
+      addUser(newUser);
+    });
 
+    const addUser = newUser => {
+      console.log(`adding ${newUser} to usersOnline`);
+      this.setState([...this.state.usersOnline, newUser]);
+      // const usersOnline = this.state.usersOnline.push(newUser)
+      // this.setState({usersOnline: usersOnline});
+      console.log(`usersOnline now are ${this.state.usersOnline}`);
+    }
 
   } // end of constructor
 

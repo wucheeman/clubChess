@@ -34,6 +34,7 @@ var activeGames = {};
       lobbyUsers[userId] = socket;
       
       // sends to all clients except one who logged in
+      console.log(`broadcasting that ${socket.userId} is joining the gameroom`);
       socket.broadcast.emit('joinlobby', socket.userId);
     } // end of doLogin
 
