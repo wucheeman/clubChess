@@ -129,6 +129,19 @@ export default class Gameroom extends React.Component {
   onDrop = (source, target) => {
     // this.removeHighlightSquare();
     console.log('in onDrop');
+
+    // prevent move if game over or wrong player
+    console.log('playerColor is: ' + this.state.playerColor)
+    console.log('the turn is: ' + this.state.game.turn());
+    // TODO: move this so it triggers when game is over and it's announced in UI
+    if (this.state.game.game_over() === true) {
+      console.log('GAME OVER!!!');
+      return;
+    }
+    // (this.state.game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+    // (this.state.game.turn() === 'b' && piece.search(/^w/) !== -1) ||
+    if (this.state.game.turn() !== this.state.playerColor[0]) return;
+
     // see if the move is legal
     var move = this.state.game.move({
       from: source,
