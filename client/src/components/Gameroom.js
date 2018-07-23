@@ -23,7 +23,7 @@ export default class Gameroom extends React.Component {
         orientation: '',
         position: '',
         gameroomVisibility: true,
-        gameVisibility: true,
+        gameVisibility: false,
     };
 
     // TODO: how to make this work with Heroku?
@@ -168,14 +168,10 @@ export default class Gameroom extends React.Component {
                       position: position});
   };
 
-  toggleGameroom() {
-    console.log("click!");
-    this.setState({gameroomVisibility: !this.state.gameroomVisibility})
-  }
-
-  toggleGame() {
-    console.log("click again!");
-    this.setState({gameVisibility: !this.state.gameVisibility})
+  toggleVisibilty() {
+    console.log("toggling visibility of game and gameroom!");
+    this.setState({gameroomVisibility: !this.state.gameroomVisibility,
+                   gameVisibility: !this.state.gameVisibility})
   }
 
   render() {
@@ -199,7 +195,7 @@ export default class Gameroom extends React.Component {
             <Link to="/">Back to Lobby</Link>
         </div>
         : null }
-        <button onClick={() => this.toggleGameroom()}>Click Me</button>
+        <button onClick={() => this.toggleVisibilty()}>Click Me</button>
         {this.state.gameVisibility ? 
           <div className="page game" id='page-game'>
             <div className='gameButtons'>
@@ -216,7 +212,6 @@ export default class Gameroom extends React.Component {
             </div>
           </div>
          : null }
-         <button onClick={() => this.toggleGame()}>Click Me</button>
       </div>  
     );
   } // end of render
