@@ -23,7 +23,9 @@ export default class Gameroom extends React.Component {
         position: '',
     };
 
-    this.socket = io('localhost:3000');
+    // TODO: how to make this work with Heroku?
+    // this.socket = io('localhost:3000');
+    this.socket = io.connect();
 
     this.login = () => {
       this.socket.emit('login', this.state.username);
@@ -183,12 +185,10 @@ export default class Gameroom extends React.Component {
               </div>
             <Link to="/">Back to Lobby</Link>
         </div>
-          {/* <div className="page game" id='page-game'>
+          <div className="page game" id='page-game'>
             <button id='game-back'>Back</button>
             <button id='game-resign'>Resign</button>
-            <div id='game-board' style={{width: '400px'}}>
-            </div>
-          </div> */}
+          </div>
         <div style={boardsContainer}>
           {/* <HumanVsHuman>
             {({
