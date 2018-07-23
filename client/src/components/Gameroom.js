@@ -10,6 +10,7 @@ export default class Gameroom extends React.Component {
     this.state = {
         username: '',
         usersOnline: [],
+        opponentID: '',
     };
 
     this.socket = io('localhost:3000');
@@ -33,6 +34,13 @@ export default class Gameroom extends React.Component {
     console.log(this.state.usersOnline);
   }
 
+  this.sendInvite = ev => {
+    console.log('got an invite to send');
+
+  }
+
+    // this.setOpponentID = this.setOpponentID.bind(this);
+
   } // end of constructor
 
   componentDidMount() {
@@ -40,7 +48,10 @@ export default class Gameroom extends React.Component {
     this.login();
   }
 
-
+  // setOpponentID = (user) => {
+  //   this.setState({opponentID: user});
+  //   console.log('opponentID is ' + this.state.opponentID);
+  // }
 
   render() {
     return (
@@ -53,14 +64,13 @@ export default class Gameroom extends React.Component {
         </div>
         <Link to="/game">Game On!</Link>
         <h3>Online players</h3>
-        <div id='userList'>
-          {this.state.usersOnline.map(user =>
-            <p>{user}</p>
-          )}
-        </div>
+          <div id='userList'>
+            {this.state.usersOnline.map(user => 
+              <button onClick={this.sendInvite} className="btn btn-primary btm-sm">{user}</button>
+            )}
+          </div>
         <Link to="/">Back to Lobby</Link>
       </div>
     );
-  }
+  } // end of render
 }
-
