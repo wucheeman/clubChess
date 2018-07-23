@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import io from "socket.io-client";
 import Chess from 'chess.js';
 import Chessboard from "chessboardjsx";
-import HumanVsHuman from "./integrations/HumanVsHuman";
+// TODO: delete this and file
+// import HumanVsHuman from "./integrations/HumanVsHuman";
 
 export default class Gameroom extends React.Component {
 
@@ -21,6 +22,8 @@ export default class Gameroom extends React.Component {
         // board: {},
         orientation: '',
         position: '',
+        gameroomVisibility: true,
+        gameVisibility: true,
     };
 
     // TODO: how to make this work with Heroku?
@@ -165,10 +168,20 @@ export default class Gameroom extends React.Component {
                       position: position});
   };
 
+  toggleGameroom() {
+    console.log("click!");
+    this.setState({gameroomVisibility: !this.state.gameroomVisibility})
+  }
+
+  toggleGame() {
+    console.log("click again!");
+    this.setState({gameVisibility: !this.state.gameVisibility})
+  }
 
   render() {
     return (
       <div className='containerpage'>
+      {this.state.gameroomVisibility ? 
         <div class="page gameroom" id='page-gameroom'>
           <h1>Game Room</h1>
             <h4 id='userLabel'>Good playing, {this.state.username}</h4>
@@ -185,40 +198,26 @@ export default class Gameroom extends React.Component {
               </div>
             <Link to="/">Back to Lobby</Link>
         </div>
+        : null }
+        <button onClick={() => this.toggleGameroom()}>Click Me</button>
+        {this.state.gameVisibility ? 
           <div className="page game" id='page-game'>
-            <button id='game-back'>Back</button>
-            <button id='game-resign'>Resign</button>
-          </div>
-        <div style={boardsContainer}>
-          {/* <HumanVsHuman>
-            {({
-              position,
-              selectedSquares,
-              onDrop,
-              onMouseOverSquare,
-              onMouseOutSquare
-            }) => (
+            <div className='gameButtons'>
+              <button id='game-back'>Back</button>
+              <button id='game-resign'>Resign</button>
+            </div>
+            <div style={boardsContainer}>
               <Chessboard
-                id="humanVsHuman"
                 width={320}
+                position={this.state.position}
                 orientation={this.state.orientation}
-                position={position}
-                selectedSquares={selectedSquares}
-                onDrop={onDrop}
-                onMouseOverSquare={onMouseOverSquare}
-                onMouseOutSquare={onMouseOutSquare}
-                boardStyle={boardStyle}
+                onDrop={this.onDrop}
               />
-            )}
-          </HumanVsHuman> */}
-          <Chessboard
-            width={320}
-            position={this.state.position}
-            orientation={this.state.orientation}
-            onDrop={this.onDrop}
-          />
-        </div>
-      </div>
+            </div>
+          </div>
+         : null }
+         <button onClick={() => this.toggleGame()}>Click Me</button>
+      </div>  
     );
   } // end of render
 }
