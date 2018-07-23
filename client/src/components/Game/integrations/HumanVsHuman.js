@@ -63,8 +63,11 @@ class HumanVsHuman extends Component {
   render() {
     const { fen, selectedSquares, myPosition } = this.state;
 
+    this.orientation = 'black';
+
     return this.props.children({
       position: fen,
+      orientation: this.orientation,
       selectedSquares,
       onMouseOverSquare: this.onMouseOverSquare,
       onMouseOutSquare: this.onMouseOutSquare,

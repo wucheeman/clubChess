@@ -18,6 +18,7 @@ export default class Gameroom extends React.Component {
         serverGame: {},
         game: {},
         board: {},
+        orientation: '',
     };
 
     this.socket = io('localhost:3000');
@@ -87,6 +88,8 @@ export default class Gameroom extends React.Component {
     this.setState({serverGame: serverGameState});
     console.log(this.state.serverGame);
 
+    this.setState({orientation: this.state.playerColor});
+    
     // var cfg = {
     //   draggable: true,
     //   showNotation: false,
@@ -153,6 +156,7 @@ export default class Gameroom extends React.Component {
               <Chessboard
                 id="humanVsHuman"
                 width={320}
+                orientation={this.state.orientation}
                 position={position}
                 selectedSquares={selectedSquares}
                 onDrop={onDrop}
