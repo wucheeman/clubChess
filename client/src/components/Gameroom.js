@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import io from "socket.io-client";
+import Chess from 'chess.js';
+import ChessBoard from 'chessboardjs';
 
 export default class Gameroom extends React.Component {
 
@@ -11,6 +13,10 @@ export default class Gameroom extends React.Component {
         username: '',
         usersOnline: [],
         opponentID: '',
+        playerColor: '',
+        serverGame: {},
+        game: {},
+        board: {},
     };
 
     this.socket = io('localhost:3000');
@@ -40,6 +46,7 @@ export default class Gameroom extends React.Component {
       this.socket.emit('invite', oppenentId);
     }
 
+    // updates list of uses in game room waiting to play
     this.socket.on('joinlobby', function(newUser) {
       console.log(`${newUser} is joining the gameroom`);
       addUser(newUser);
@@ -53,6 +60,19 @@ export default class Gameroom extends React.Component {
       console.log(`usersOnline now are ${this.state.usersOnline}`);
     }
 
+    this.socket.on('joingame', function(data) {
+      console.log(`got joingame message`);
+      startGame(data);
+    });
+
+    const startGame = (data) => {
+      console.log('in startGame');
+      this.setState({playerColor: data.color});
+      console.log(this.state.playerColor);
+      this.initGame(data.game);
+    }
+
+
   } // end of constructor
 
   componentDidMount() {
@@ -60,28 +80,66 @@ export default class Gameroom extends React.Component {
     this.login();
   }
 
-  // setOpponentID = (user) => {
-  //   this.setState({opponentID: user});
-  //   console.log('opponentID is ' + this.state.opponentID);
-  // }
+
+  initGame(serverGameState) {
+    console.log('in initGame');
+    this.setState({serverGame: serverGameState});
+    console.log(this.state.serverGame);
+
+    var cfg = {
+      draggable: true,
+      showNotation: false,
+      orientation: this.state.playerColor,
+      position: this.state.serverGame.board ? this.state.serverGame.board : 'start',
+      onDragStart: this.onDragStart,
+      onDrop: this.onDrop,
+      onSnapEnd: this.onSnapEnd
+    };
+
+    // use this.setState()?
+    this.state.game = this.state.serverGame.board ? new Chess(this.state.serverGame.board) : new Chess();
+    this.state.board = new ChessBoard('game-board', cfg);
+
+  }
+
+
+  onDragStart = function() {
+
+  };
+
+  onDrop = function() {
+
+  };
+
+  onSnapEnd = function() {
+
+  };
 
   render() {
     return (
-      <div class="page gameroom" id='page-gameroom'>
-      <h1>Game Room</h1>
-        <h4 id='userLabel'>Good playing, {this.state.username}</h4>
-        <h3>Active games</h3>
-        <div id='gamesList'>
-          No active games
+      <div className='containerpage'>
+        <div class="page gameroom" id='page-gameroom'>
+          <h1>Game Room</h1>
+            <h4 id='userLabel'>Good playing, {this.state.username}</h4>
+            <h3>Active games</h3>
+            <div id='gamesList'>
+              No active games
+            </div>
+            <Link to="/game">Game On!</Link>
+            <h3>Online players</h3>
+              <div id='userList'>
+                {this.state.usersOnline.map(user => 
+                  <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm">{user}</button>
+                )}
+              </div>
+            <Link to="/">Back to Lobby</Link>
         </div>
-        <Link to="/game">Game On!</Link>
-        <h3>Online players</h3>
-          <div id='userList'>
-            {this.state.usersOnline.map(user => 
-              <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm">{user}</button>
-            )}
+          <div className="page game" id='page-game'>
+            <button id='game-back'>Back</button>
+            <button id='game-resign'>Resign</button>
+            <div id='game-board' style={{width: '400px'}}>
+            </div>
           </div>
-        <Link to="/">Back to Lobby</Link>
       </div>
     );
   } // end of render

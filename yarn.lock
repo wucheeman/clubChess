@@ -321,6 +321,10 @@ chess.js@^0.10.2:
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/chess.js/-/chess.js-0.10.2.tgz#eacefa2067155f87f046e80cc12d2019eef1b81a"
 
+chessboardjs@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/chessboardjs/-/chessboardjs-0.0.1.tgz#106e112dba6cc0dcdcf75472a29212c304ff564e"
+
 chessboardjsx@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/chessboardjsx/-/chessboardjsx-1.0.9.tgz#23dba8808c8ddb32daf0dba993cec12d43709e3c"
