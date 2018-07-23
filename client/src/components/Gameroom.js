@@ -19,6 +19,7 @@ export default class Gameroom extends React.Component {
         game: {},
         board: {},
         orientation: '',
+        position: '',
     };
 
     this.socket = io('localhost:3000');
@@ -88,8 +89,9 @@ export default class Gameroom extends React.Component {
     this.setState({serverGame: serverGameState});
     console.log(this.state.serverGame);
 
+    this.setState({position: 'start'});
     this.setState({orientation: this.state.playerColor});
-    
+
     // var cfg = {
     //   draggable: true,
     //   showNotation: false,
@@ -100,6 +102,7 @@ export default class Gameroom extends React.Component {
     //   onSnapEnd: this.onSnapEnd
     // };
 
+    
     // // use this.setState()?
     // this.state.game = this.state.serverGame.board ? new Chess(this.state.serverGame.board) : new Chess();
     // this.state.board = new ChessBoard('game-board', cfg);
@@ -145,7 +148,7 @@ export default class Gameroom extends React.Component {
             </div>
           </div> */}
         <div style={boardsContainer}>
-          <HumanVsHuman>
+          {/* <HumanVsHuman>
             {({
               position,
               selectedSquares,
@@ -165,7 +168,13 @@ export default class Gameroom extends React.Component {
                 boardStyle={boardStyle}
               />
             )}
-          </HumanVsHuman>
+          </HumanVsHuman> */}
+          <Chessboard
+            width={320}
+            position={this.state.position}
+            orientation={this.state.orientation}
+            onDrop={this.onDrop}
+          />
         </div>
       </div>
     );
