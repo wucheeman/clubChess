@@ -64,6 +64,7 @@ class Directory extends Component {
                   <tr>
                     {/* TODO: convert to opening game room to play that user */}
                     <td><Link to={`/show/${user._id}`}>{user.status}</Link></td>
+                    <td>{user.name}</td>
                     <td>{user.username}</td>
                     <td>TBD</td>
                   </tr>
