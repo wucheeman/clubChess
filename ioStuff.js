@@ -112,16 +112,16 @@ var activeGames = {};
 
 
     socket.on('leave-room', function(msg){
-      console.log('user left room');
+      console.log('user left gameroom');
 
       console.log(msg);
-            
+      console.log(socket.userId);
       delete lobbyUsers[socket.userId];
-      socket.broadcast.emit('leavelobby', socket.userId);
-      // socket.broadcast.emit('logout', {
-      //   userId: socket.userId,
-      //   gameId: socket.gameId
-      // });
+      //socket.broadcast.emit('leavelobby', socket.userId);
+      socket.broadcast.emit('logout', {
+        userId: socket.userId,
+        gameId: socket.gameId
+      });
     });
 
   // TODO: fix bug # 1
@@ -129,8 +129,8 @@ var activeGames = {};
     socket.on('disconnect', function(msg){
       console.log('user disconnected');
 
-      console.log(msg);
-        
+      console.log(msg); 
+
       if (socket && socket.userId && socket.gameId) {
         console.log(socket.userId + ' disconnected');
         console.log(socket.gameId + ' disconnected');

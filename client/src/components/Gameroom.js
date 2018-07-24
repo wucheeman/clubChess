@@ -116,6 +116,12 @@ export default class Gameroom extends React.Component {
       removeUser(msg);
     });
 
+    this.socket.on('logout', function (msg) {
+      console.log('got user logout message re:');
+      console.log(msg);
+      removeUser(msg.userId);
+    });
+
     const removeUser = (userId) => {
       console.log('in removeUser for ' + userId);
       // make a copy of array
@@ -208,7 +214,7 @@ export default class Gameroom extends React.Component {
   }
 
   handleLobbyClick() {
-    console.log('going back to lobby');
+    console.log( this.state.username + ' ia going back to lobby');
     this.socket.emit('leave-room', this.state.username);
     window.location.href = "/";
   }
