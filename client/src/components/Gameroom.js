@@ -118,15 +118,25 @@ export default class Gameroom extends React.Component {
 
     const removeUser = (userId) => {
       console.log('in removeUser for ' + userId);
-      // TODO refactor and use array.find()
-      let usersOnline = this.state.usersOnline
-      for (var i=0; i < usersOnline.length; i++) {
-        if (usersOnline[i] === userId) {
-            usersOnline.splice(i, 1);
-            this.setState({usersOnline: usersOnline});
-        }
-     }
+      // make a copy of array
+      let usersOnline = [...this.state.usersOnline];
+      console.log(`before removal, usersOnline is ${usersOnline}`)
+      // for (var i=0; i < usersOnline.length; i++) {
+      //   if (usersOnline[i] === userId) {
+      //       usersOnline.splice(i, 1);
+      //       this.setState({usersOnline: usersOnline});
+      //   }
+      const remainingUsers = usersOnline.filter(user => user !== userId);
+      console.log(`after removal, usersOnline is ${remainingUsers}`)
+      this.setState({usersOnline: remainingUsers});
+      console.log(`usersOnline now are ${this.state.usersOnline}`);
     };
+
+
+
+
+
+
 
 
   } // end of constructor
