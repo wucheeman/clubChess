@@ -201,7 +201,7 @@ export default class Gameroom extends React.Component {
     return (
       <div className='containerpage'>
       {this.state.gameroomVisibility ? 
-        <div class="page gameroom" id='page-gameroom'>
+        <div className="page gameroom" id='page-gameroom'>
           <h1>Game Room</h1>
             <h4 id='userLabel'>Good playing, {this.state.username}</h4>
             <h3>Active games</h3>
@@ -222,7 +222,7 @@ export default class Gameroom extends React.Component {
         {this.state.gameVisibility ? 
           <div className="page game" id='page-game'>
             <div className='gameButtons'>
-              <button id='game-back' onClick={() => this.handleOverClick()}>Game Over/Resign</button>
+              <button id='game-back' className="btn btn-primary" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
             </div>
             <div style={boardsContainer}>
               <Chessboard
