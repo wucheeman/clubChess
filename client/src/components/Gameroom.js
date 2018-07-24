@@ -130,6 +130,8 @@ export default class Gameroom extends React.Component {
       console.log('got user logout message re:');
       console.log(msg);
       removeUser(msg.userId);
+      // for case when user reloaded during game
+      handleResign(msg);
     });
 
     const removeUser = (userId) => {
