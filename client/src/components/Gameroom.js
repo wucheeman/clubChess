@@ -26,9 +26,9 @@ export default class Gameroom extends React.Component {
         gameVisibility: false,
     };
 
-    // TODO: how to make this work with Heroku?
-    // this.socket = io('localhost:3000');
-    this.socket = io.connect();
+    this.socket = io('localhost:3000');
+    // TODO: his is supposed to be how to make this work with Heroku
+    // this.socket = io.connect();
 
     this.login = () => {
       this.socket.emit('login', this.state.username);
@@ -105,6 +105,23 @@ export default class Gameroom extends React.Component {
         this.toggleVisibilty();
       }
     }
+
+    this.socket.on('leavelobby', function (msg) {
+      console.log(msg + ' is leaving the gameroom');
+      removeUser(msg);
+    });
+
+    const removeUser = (userId) => {
+      console.log('in removeUser for ' + userId);
+      // TODO refactor and use array.find()
+      let usersOnline = this.state.usersOnline
+      for (var i=0; i < usersOnline.length; i++) {
+        if (usersOnline[i] === userId) {
+            usersOnline.splice(i, 1);
+            this.setState({usersOnline: usersOnline});
+        }
+     }
+    };
 
 
   } // end of constructor
@@ -197,6 +214,12 @@ export default class Gameroom extends React.Component {
     this.toggleVisibilty();
   }
 
+  handleLobbyClick() {
+    console.log('going back to lobby');
+    this.socket.emit('leave-room', this.state.username);
+    window.location.href = "/";
+  }
+
   render() {
     return (
       <div className='containerpage'>
@@ -215,7 +238,8 @@ export default class Gameroom extends React.Component {
                   <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm">{user}</button>
                 )}
               </div>
-            <Link to="/">Back to Lobby</Link>
+            {/* <Link to="/">Back to Lobby</Link> */}
+            <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button>
         </div>
         : null }
         <button onClick={() => this.toggleVisibilty()}>Click Me</button>
