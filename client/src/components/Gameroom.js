@@ -106,8 +106,18 @@ export default class Gameroom extends React.Component {
 
     const handleResign = (data) => {
       if (data.gameId == this.state.serverGame.id) {
-        this.socket.emit('login', this.state.username);
+
+        // this.setState(
+        //   {opponentID: '',
+        //   playerColor: '',
+        //   serverGame: {},
+        //   game: {},
+        //   orientation: '',
+        //   position: ''},
+        // );
         this.toggleVisibilty();
+        this.socket.emit('login', this.state.username);
+        // this.toggleVisibilty();
       }
     }
 
@@ -209,6 +219,14 @@ export default class Gameroom extends React.Component {
   handleOverClick() {
     console.log('handling game over click');
     this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame.id});
+            this.setState(
+          {opponentID: '',
+          playerColor: '',
+          serverGame: {},
+          game: {},
+          orientation: '',
+          position: ''},
+        );
     this.socket.emit('login', this.state.username);
     this.toggleVisibilty();
   }
