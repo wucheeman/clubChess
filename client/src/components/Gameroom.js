@@ -61,9 +61,14 @@ export default class Gameroom extends React.Component {
 
     const addUser = newUser => {
       console.log(`adding ${newUser} to usersOnline`);
-      this.setState([...this.state.usersOnline, newUser]);
+      // make a copy of array
+      let usersOnline = [...this.state.usersOnline];
+      console.log(`before adding, usersOnline is ${usersOnline}`)
+      usersOnline.push(newUser);
+      console.log(`after adding, usersOnline is ${usersOnline}`)
+      // this.setState([...this.state.usersOnline, newUser]);
       // const usersOnline = this.state.usersOnline.push(newUser)
-      // this.setState({usersOnline: usersOnline});
+      this.setState({usersOnline: usersOnline});
       console.log(`usersOnline now are ${this.state.usersOnline}`);
     }
 
