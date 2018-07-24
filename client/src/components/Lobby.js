@@ -47,33 +47,22 @@ class Lobby extends Component {
               }
             </h3>
             <h6>
+              <br />
               Welcome to {sessionStorage.getItem('username')}!
             </h6>
           </div>
           <div className="panel-body">
-            <table className="table table-stripe">
-              <thead>
-                <tr>
-                  <th>Status</th>
-                  <th>UserID</th>
-                  <th>Future Growth</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.users.map(user =>
-                  <tr>
-                    {/* TODO: convert to opening game room to play that user */}
-                    <td><Link to={`/show/${user._id}`}>{user.status}</Link></td>
-                    <td>{user.username}</td>
-                    <td>TBD</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+          <br />
           <Link to="/gameroom">
-            Game Room
+            To the Game Room
           </Link>
+          <br />
+          <br />
+          <Link to="/directory">
+            To the Member Directory
+          </Link>
+          </div>
+
         </div>
       </div>
     );
