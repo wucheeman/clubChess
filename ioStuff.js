@@ -5,7 +5,7 @@ var lobbyUsers = {};
 var activeGames = {};
 
   io.on('connection', function(socket){
-    console.log('a user connected');
+    console.log('a user connected via socket.io');
     socket.on('chat message', function(msg) {
       console.log('message: ' + msg);
       // io.emit('chat message', msg);
@@ -34,6 +34,7 @@ var activeGames = {};
       lobbyUsers[userId] = socket;
       
       // sends to all clients except one who logged in
+      console.log(`broadcasting that ${socket.userId} is joining the gameroom`);
       socket.broadcast.emit('joinlobby', socket.userId);
     } // end of doLogin
 
@@ -46,6 +47,7 @@ var activeGames = {};
       
       var game = {
           id: Math.floor((Math.random() * 100) + 1),
+          // TODO: delete this?
           board: null, 
           users: {white: socket.userId, black: opponentId}
       };
@@ -91,8 +93,9 @@ var activeGames = {};
     });
 
     socket.on('move', function(msg) {
+      console.log('got the move emission');
       socket.broadcast.emit('move', msg);
-      activeGames[msg.gameId].board = msg.board;
+      activeGames[msg.gameId].position = msg.position;
       console.log(msg);
     });
 
@@ -109,16 +112,16 @@ var activeGames = {};
 
 
     socket.on('leave-room', function(msg){
-      console.log('user left room');
+      console.log('user left gameroom');
 
       console.log(msg);
-            
+      console.log(socket.userId);
       delete lobbyUsers[socket.userId];
-      socket.broadcast.emit('leavelobby', socket.userId);
-      // socket.broadcast.emit('logout', {
-      //   userId: socket.userId,
-      //   gameId: socket.gameId
-      // });
+      //socket.broadcast.emit('leavelobby', socket.userId);
+      socket.broadcast.emit('logout', {
+        userId: socket.userId,
+        gameId: socket.gameId
+      });
     });
 
   // TODO: fix bug # 1
@@ -126,8 +129,8 @@ var activeGames = {};
     socket.on('disconnect', function(msg){
       console.log('user disconnected');
 
-      console.log(msg);
-        
+      console.log(msg); 
+
       if (socket && socket.userId && socket.gameId) {
         console.log(socket.userId + ' disconnected');
         console.log(socket.gameId + ' disconnected');

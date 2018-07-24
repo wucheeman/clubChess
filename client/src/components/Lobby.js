@@ -37,25 +37,25 @@ class Lobby extends Component {
 
   render() {
     return (
-      <div class="container">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
+      <div className="container">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">
               CLUB LOBBY &nbsp;
               {sessionStorage.getItem('jwtToken') &&
-                <button class="btn btn-primary" onClick={this.logout}>Logout</button>
+                <button className="btn btn-primary" onClick={this.logout}>Logout</button>
               }
             </h3>
             <h6>
               Welcome to {sessionStorage.getItem('username')}!
             </h6>
           </div>
-          <div class="panel-body">
-            <table class="table table-stripe">
+          <div className="panel-body">
+            <table className="table table-stripe">
               <thead>
                 <tr>
                   <th>Status</th>
-                  <th>Username</th>
+                  <th>UserID</th>
                   <th>Future Growth</th>
                 </tr>
               </thead>
@@ -71,9 +71,9 @@ class Lobby extends Component {
               </tbody>
             </table>
           </div>
-          {/* return <img src={process.env.PUBLIC_URL + '/img/logo.png'} />; */}
-          {/* {console.log('typeof public url is: ' + typeof process.env.PUBLIC_URL)} */}
-          <a href="./gameroom.html">Game Room</a>
+          <Link to="/gameroom">
+            Game Room
+          </Link>
         </div>
       </div>
     );
