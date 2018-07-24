@@ -106,15 +106,15 @@ export default class Gameroom extends React.Component {
 
     const handleResign = (data) => {
       if (data.gameId == this.state.serverGame.id) {
-
-        // this.setState(
-        //   {opponentID: '',
-        //   playerColor: '',
-        //   serverGame: {},
-        //   game: {},
-        //   orientation: '',
-        //   position: ''},
-        // );
+        // todo: if this fix works, not DRY with 'handleGameOver'
+        this.setState(
+          {opponentID: '',
+          playerColor: '',
+          serverGame: {},
+          game: {},
+          orientation: '',
+          position: ''},
+        );
         this.toggleVisibilty();
         this.socket.emit('login', this.state.username);
         // this.toggleVisibilty();
