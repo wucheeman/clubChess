@@ -5,6 +5,7 @@ import Chess from 'chess.js';
 import Chessboard from "chessboardjsx";
 // TODO: delete this and file
 // import HumanVsHuman from "./integrations/HumanVsHuman";
+import axios from 'axios';
 
 export default class Gameroom extends React.Component {
 
@@ -149,8 +150,23 @@ export default class Gameroom extends React.Component {
   } // end of constructor
 
   componentDidMount() {
-    this.state.username = sessionStorage.getItem('username');
-    this.login();
+    // this.state.username = sessionStorage.getItem('username');
+    // this.login();
+    axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtToken');
+    //console.log(localStorage.getItem('username'));
+    //console.log('in componentDidMount');
+    axios.get('/api/user')
+      .then(res => {
+        this.setState({username: sessionStorage.getItem('username')});
+        this.setState({ users: res.data });
+        console.log(this.state.users);
+        this.login(); // only addition to code copied from Lobby
+      })
+      .catch((error) => {
+        if(error.response.status === 401) {
+          this.props.history.push("/login");
+        }
+      });
   }
 
 
