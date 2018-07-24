@@ -26,9 +26,7 @@ export default class Gameroom extends React.Component {
         gameVisibility: false,
     };
 
-    this.socket = io('localhost:3000');
-    // TODO: his is supposed to be how to make this work with Heroku
-    // this.socket = io.connect();
+    this.socket = io.connect();
 
     this.login = () => {
       this.socket.emit('login', this.state.username);
@@ -91,10 +89,12 @@ export default class Gameroom extends React.Component {
     });
 
     const updateGame = (data) => {
+      let position;
+      console.log('in updateGame')
       console.log(data);
       if (this.state.serverGame && data.gameId ===   this.state.serverGame.id) {
         this.state.game.move(data.move);
-        let position = this.state.game.fen()
+        position = this.state.game.fen()
         this.setState({ position: position });
       }
     }
@@ -121,22 +121,11 @@ export default class Gameroom extends React.Component {
       // make a copy of array
       let usersOnline = [...this.state.usersOnline];
       console.log(`before removal, usersOnline is ${usersOnline}`)
-      // for (var i=0; i < usersOnline.length; i++) {
-      //   if (usersOnline[i] === userId) {
-      //       usersOnline.splice(i, 1);
-      //       this.setState({usersOnline: usersOnline});
-      //   }
       const remainingUsers = usersOnline.filter(user => user !== userId);
       console.log(`after removal, usersOnline is ${remainingUsers}`)
       this.setState({usersOnline: remainingUsers});
       console.log(`usersOnline now are ${this.state.usersOnline}`);
     };
-
-
-
-
-
-
 
 
   } // end of constructor
@@ -149,6 +138,8 @@ export default class Gameroom extends React.Component {
 
   initGame(serverGameState) {
     console.log('in initGame');
+    // must be here, or DOM is not correctly updated after visibility toggled
+    this.toggleVisibilty();
     this.setState({serverGame: serverGameState});
     console.log(this.state.serverGame);
 
@@ -157,23 +148,7 @@ export default class Gameroom extends React.Component {
     // const newGame = new Chess();
         // this.setState({game: newGame});
     this.setState({game: new Chess()});
-    this.toggleVisibilty();
-
-
-    // var cfg = {
-    //   draggable: true,
-    //   showNotation: false,
-    //   orientation: this.state.playerColor,
-    //   position: this.state.serverGame.board ? this.state.serverGame.board : 'start',
-    //   onDragStart: this.onDragStart,
-    //   onDrop: this.onDrop,
-    //   onSnapEnd: this.onSnapEnd
-    // };
-
-    
-    // // use this.setState()?
-    // this.state.game = this.state.serverGame.board ? new Chess(this.state.serverGame.board) : new Chess();
-    // this.state.board = new ChessBoard('game-board', cfg);
+    // this.toggleVisibilty();
 
   }
 
@@ -184,6 +159,7 @@ export default class Gameroom extends React.Component {
     // prevent move if game over or wrong player
     console.log('playerColor is: ' + this.state.playerColor)
     console.log('the turn is: ' + this.state.game.turn());
+    console.log('the position is: '  + this.state.position);
     // TODO: move this so it triggers when game is over and it's announced in UI
     if (this.state.game.game_over() === true) {
       console.log('GAME OVER!!!');
@@ -215,6 +191,8 @@ export default class Gameroom extends React.Component {
                       position: position});
   };
 
+  // this moves elements in and out of DOM, so be careful about 
+  // where you place calls to it relative to updates to state
   toggleVisibilty() {
     console.log("toggling visibility of game and gameroom!");
     this.setState({gameroomVisibility: !this.state.gameroomVisibility,
