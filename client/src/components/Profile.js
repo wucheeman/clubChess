@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
-// import './Login.css';
+import { Link } from 'react-router-dom';
 
 class Profile extends Component {
 
@@ -46,9 +45,16 @@ class Profile extends Component {
           <label for="inputPhonenum" >Phone Number</label>
           <input type="text" className="form-control" placeholder="123-1234" name="phonenum" value={phonenum} onChange={this.onChange} />
           <label for="inputStatus">Status</label>
-          <input type="text" className="form-control" placeholder="Available to play" name="status" value={status} onChange={this.onChange} />
+          <input type="text" className="form-control" placeholder="On-line" name="status" value={status} onChange={this.onChange} />
+          <br />
           <button className="btn btn-lg btn-primary" type="submit">Update</button>
         </form>
+        <div>
+          <br />
+          <Link to="/directory">
+            To the Member Directory
+          </Link>
+        </div>
       </div>
     );
   }
