@@ -16,6 +16,24 @@ class Profile extends Component {
     };
   }
 
+
+  componentDidMount() {
+    axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtToken');
+    axios.get('/api/user')
+      .then(res => {
+        this.setState({username: sessionStorage.getItem('username')});
+        // this.setState({ users: res.data });
+        // console.log(this.state.users);
+      })
+      .catch((error) => {
+        if(error.response.status === 401) {
+          this.props.history.push("/login");
+        }
+      });
+  }
+
+
+
   onChange = (e) => {
     const state = this.state
     state[e.target.name] = e.target.value;
