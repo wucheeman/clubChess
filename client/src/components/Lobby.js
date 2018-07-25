@@ -13,13 +13,14 @@ class Lobby extends Component {
     };
   }
 
+
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtToken');
-    //console.log(localStorage.getItem('username'));
-    //console.log('in componentDidMount');
     axios.get('/api/user')
       .then(res => {
         this.setState({username: sessionStorage.getItem('username')});
+        // TODO: clean up: next two lines are probably not necessary
+        // test during cleanup
         this.setState({ users: res.data });
         console.log(this.state.users);
       })

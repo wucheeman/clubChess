@@ -169,7 +169,6 @@ export default class Gameroom extends React.Component {
       });
   }
 
-
   initGame(serverGameState) {
     console.log('in initGame');
     // must be here, or DOM is not correctly updated after visibility toggled
