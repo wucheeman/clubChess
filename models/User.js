@@ -17,7 +17,7 @@ var UserSchema = new Schema({
     },
   status: {
         type: String,
-        default: "Available"
+        default: "Off-Line"
     },
   phonenum: {
         type: String,

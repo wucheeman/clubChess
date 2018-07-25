@@ -19,19 +19,24 @@ router.get('/', passport.authenticate('jwt', { session: false}), function(req, r
   }
 });
 
-// TODO: delete
-/* Create a User and save*/
-// router.post('/', passport.authenticate('jwt', { session: false}), function(req, res) {
-//   var token = getToken(req.headers);
-//   if (token) {
-//     User.create(req.body, function (err, post) {
-//       if (err) return next(err);
-//       res.json(post);
-//     });
-//   } else {
-//     return res.status(403).send({success: false, msg: 'Unauthorized.'});
-//   }
-// });
+
+router.post('/profile', function(req, res) {
+  console.log(req.body);
+  const updateObj = {};
+  if (req.body.name !== '') {
+    updateObj.name = req.body.name;
+  }
+  if (req.body.phonenum !== '') {
+    updateObj.phonenum = req.body.phonenum;
+  }
+  if (req.body.status !== '') {
+    updateObj.status = req.body.status;
+  }
+  User
+    .findOneAndUpdate({ username: req.body.username }, {$set: updateObj }) // was {$set: req.body }
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+});
 
 // gets/extracts JWT token
 getToken = function (headers) {
