@@ -62,6 +62,11 @@ class Lobby extends Component {
           <Link to="/directory">
             To the Member Directory
           </Link>
+          <br />
+          <br />
+          <Link to="/profile">
+            To Update Your Profile
+          </Link>
           </div>
 
         </div>
