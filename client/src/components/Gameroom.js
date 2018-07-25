@@ -6,6 +6,7 @@ import Chessboard from "chessboardjsx";
 // TODO: delete this and file
 // import HumanVsHuman from "./integrations/HumanVsHuman";
 import axios from 'axios';
+import Chat from './Chat';
 
 export default class Gameroom extends React.Component {
 
@@ -290,6 +291,7 @@ export default class Gameroom extends React.Component {
                 onDrop={this.onDrop}
               />
             </div>
+            <Chat />
           </div>
          : null }
       </div>  
