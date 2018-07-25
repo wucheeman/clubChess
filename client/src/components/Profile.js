@@ -16,7 +16,6 @@ class Profile extends Component {
     };
   }
 
-
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtToken');
     axios.get('/api/user')
@@ -32,23 +31,21 @@ class Profile extends Component {
       });
   }
 
-
-
   onChange = (e) => {
     const state = this.state
     state[e.target.name] = e.target.value;
     this.setState(state);
   }
 
-  onSubmit = (e) => {
-    e.preventDefault();
-
-    const { name, phonenum, status } = this.state;
-
-    // axios.post('/api/auth/register', { username, password })
-    //   .then((result) => {
-    //     this.props.history.push("/login")
-    //   });
+onSubmit = (e) => {
+  e.preventDefault();
+  console.log('in onSubmit');
+  const { username, name, phonenum, status } = this.state;
+  console.log(username, name, phonenum, status);
+  axios.post('/api/user/profile', { username, name, phonenum, status })
+    .then((result) => {
+      console.log(result);
+    });
   }
 
   // add password and user name later?
