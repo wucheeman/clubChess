@@ -6,7 +6,7 @@ import Chessboard from "chessboardjsx";
 // TODO: delete this and file
 // import HumanVsHuman from "./integrations/HumanVsHuman";
 import axios from 'axios';
-import Chat from './Chat';
+import './Chat.css';
 
 export default class Gameroom extends React.Component {
 
@@ -147,7 +147,6 @@ export default class Gameroom extends React.Component {
       console.log(`usersOnline now are ${this.state.usersOnline}`);
     };
 
-
   } // end of constructor
 
   componentDidMount() {
@@ -249,11 +248,22 @@ export default class Gameroom extends React.Component {
     this.toggleVisibilty();
   }
 
+  handleChatClick() {
+    const chatMessage = document.getElementById('m').value;
+    console.log(chatMessage);
+    this.socket.emit('chat message', chatMessage);
+    const messageForm = document.getElementsByName('chatForm')[0];
+    messageForm.reset();
+    return false;
+  }
+
   handleLobbyClick() {
     console.log( this.state.username + ' ia going back to lobby');
     this.socket.emit('leave-room', this.state.username);
     window.location.href = "/";
   }
+
+
 
   render() {
     return (
@@ -277,7 +287,8 @@ export default class Gameroom extends React.Component {
             <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button>
         </div>
         : null }
-        <button onClick={() => this.toggleVisibilty()}>Click Me</button>
+        {/* TODO: delete! */}
+        {/* <button onClick={() => this.toggleVisibilty()}>Click Me</button> */}
         {this.state.gameVisibility ? 
           <div className="page game" id='page-game'>
             <div className='gameButtons'>
@@ -291,9 +302,19 @@ export default class Gameroom extends React.Component {
                 onDrop={this.onDrop}
               />
             </div>
-            <Chat />
           </div>
          : null }
+         <div>
+              <br />
+              {/* <h4>Chat Messages</h4>
+              <ul id="messages"></ul> */}
+              <form className="chatForm" name="chatForm">
+                <input type='text' id="m" />
+                {/* <button id='chatButton' >Send</button> */}
+                {/* <button id='chatButton' onClick={() => this.handleChatClick()}>Send</button> */}
+                <button id="button" type="button" value="send" class="btn btn-primary" onClick={() => this.handleChatClick()}>Submit</button>
+              </form>
+            </div>
       </div>  
     );
   } // end of render
