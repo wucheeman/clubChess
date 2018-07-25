@@ -55,8 +55,9 @@ class Directory extends Component {
               <thead>
                 <tr>
                   <th>Status</th>
+                  <th>Name</th>
                   <th>UserID</th>
-                  <th>Future Growth</th>
+                  <th>Phone Number</th>
                 </tr>
               </thead>
               <tbody>
@@ -66,7 +67,7 @@ class Directory extends Component {
                     <td><Link to={`/show/${user._id}`}>{user.status}</Link></td>
                     <td>{user.name}</td>
                     <td>{user.username}</td>
-                    <td>TBD</td>
+                    <td>{user.phonenum}</td>
                   </tr>
                 )}
               </tbody>
