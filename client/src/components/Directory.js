@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-class Lobby extends Component {
+class Directory extends Component {
 
   constructor(props) {
     super(props);
@@ -13,14 +13,13 @@ class Lobby extends Component {
     };
   }
 
-
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtToken');
+    //console.log(localStorage.getItem('username'));
+    //console.log('in componentDidMount');
     axios.get('/api/user')
       .then(res => {
         this.setState({username: sessionStorage.getItem('username')});
-        // TODO: clean up: next two lines are probably not necessary
-        // test during cleanup
         this.setState({ users: res.data });
         console.log(this.state.users);
       })
@@ -42,35 +41,45 @@ class Lobby extends Component {
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">
-              CLUB LOBBY &nbsp;
+              CLUB Directory &nbsp;
               {sessionStorage.getItem('jwtToken') &&
                 <button className="btn btn-primary" onClick={this.logout}>Logout</button>
               }
             </h3>
             <h6>
-              <br />
               Welcome to {sessionStorage.getItem('username')}!
             </h6>
           </div>
           <div className="panel-body">
-          <br />
-          <Link to="/gameroom">
-            To the Game Room
-          </Link>
-          <br />
-          <br />
-          <Link to="/directory">
-            To the Member Directory
-          </Link>
+            <table className="table table-stripe">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Name</th>
+                  <th>UserID</th>
+                  <th>Phone Number</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.users.map(user =>
+                  <tr>
+                    {/* TODO: convert to opening game room to play that user */}
+                    <td><Link to={`/show/${user._id}`}>{user.status}</Link></td>
+                    <td>{user.name}</td>
+                    <td>{user.username}</td>
+                    <td>{user.phonenum}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
-
         </div>
       </div>
     );
   }
 }
 
-export default Lobby;
+export default Directory;
 
 
 

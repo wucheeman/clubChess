@@ -18,7 +18,10 @@ var UserSchema = new Schema({
   status: {
         type: String,
         default: "Available"
-    }
+    },
+  phonenum: {
+        type: String,
+  }
 });
 
 UserSchema.pre('save', function (next) {
