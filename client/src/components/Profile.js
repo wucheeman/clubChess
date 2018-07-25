@@ -57,7 +57,7 @@ class Profile extends Component {
     return (
       <div className="container">
         <form className="form-profile" onSubmit={this.onSubmit}>
-          <h2 className="form-profile-heading">Your Profile</h2>
+          <h2 className="form-profile-heading">Profile for {this.state.username}</h2>
           <label for="inputName" >Name</label>
           <input type="text" className="form-control" placeholder="Jane Doe" name="name" value={name} onChange={this.onChange}/>
           <label for="inputPhonenum" >Phone Number</label>
