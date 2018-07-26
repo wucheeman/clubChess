@@ -287,12 +287,12 @@ export default class Gameroom extends React.Component {
             <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button>
         </div>
         : null }
-        {/* TODO: delete! */}
-        {/* <button onClick={() => this.toggleVisibilty()}>Click Me</button> */}
+
+
         {this.state.gameVisibility ? 
           <div className="page game" id='page-game'>
             <div className='gameButtons'>
-              <button id='game-back' className="btn btn-primary" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
+              <button id='game-back' className="btn btn-primary btn-sm" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
             </div>
             <div style={boardsContainer}>
               <Chessboard
@@ -302,25 +302,22 @@ export default class Gameroom extends React.Component {
                 onDrop={this.onDrop}
               />
             </div>
+            <br />
+            <form className="chatForm" name="chatForm">
+              <input type='text' id="m" />
+              <button id="button" type="button" value="send" class="btn btn-primary btn-sm" onClick={() => this.handleChatClick()}>Submit</button>
+            </form>
           </div>
          : null }
+
          <div>
-              <br />
-              {/* <h4>Chat Messages</h4>
-              <ul id="messages"></ul> */}
-              <form className="chatForm" name="chatForm">
-                <input type='text' id="m" />
-                {/* <button id='chatButton' >Send</button> */}
-                {/* <button id='chatButton' onClick={() => this.handleChatClick()}>Send</button> */}
-                <button id="button" type="button" value="send" class="btn btn-primary" onClick={() => this.handleChatClick()}>Submit</button>
-              </form>
-            </div>
+       </div>
       </div>  
     );
   } // end of render
 }
 
-
+// TODO: move to stylesheet
 const boardsContainer = {
   display: "flex",
   justifyContent: "center",
