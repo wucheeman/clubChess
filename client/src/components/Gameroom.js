@@ -115,8 +115,9 @@ export default class Gameroom extends React.Component {
             game: {},
             orientation: '',
             position: '',
-            gameroomVisibility: true,
-            gameVisibility: false,
+            // do not uncomment: left here to underline this message!
+            // gameroomVisibility: true,
+            // gameVisibility: false,
             chatText: []
           },
         );
@@ -254,15 +255,22 @@ export default class Gameroom extends React.Component {
 
   handleOverClick() {
     console.log('handling game over click');
+    // not DRY with handleResign!
     this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame.id});
-            this.setState(
-          {opponentID: '',
-          playerColor: '',
-          serverGame: {},
-          game: {},
-          orientation: '',
-          position: ''},
-        );
+    this.setState(
+      {
+        opponentID: '',
+        playerColor: '',
+        serverGame: {},
+        game: {},
+        orientation: '',
+        position: '',
+        // do not uncomment: left here to underline this message!
+        // gameroomVisibility: true,
+        // gameVisibility: false,
+        chatText: []
+      },
+    );
     this.socket.emit('login', this.state.username);
     this.toggleVisibilty();
   }
@@ -296,7 +304,7 @@ export default class Gameroom extends React.Component {
       {this.state.gameroomVisibility ? 
         <div className="page gameroom" id='page-gameroom'>
           <h1>Game Room</h1>
-            <h4 id='userLabel'>Good playing, {this.state.username}</h4>
+            <h4 id='userLabel'>Enjoy your game, {this.state.username}!</h4>
             <h3>Active games</h3>
             <div id='gamesList'>
               No active games
