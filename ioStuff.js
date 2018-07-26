@@ -148,7 +148,7 @@ var activeGames = {};
     socket.on('chat message', function(msg) {
       console.log('message: ' + msg);
       // io.emit('chat message', msg);
-      //socket.emit('chat message', msg);
+      socket.broadcast.emit('chat message', msg);
     });
 
     //TODO: cleanup unless somehow these are needed

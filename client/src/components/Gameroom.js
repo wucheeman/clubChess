@@ -20,12 +20,11 @@ export default class Gameroom extends React.Component {
         playerColor: '',
         serverGame: {},
         game: {},
-        // no need for this with Chessboard component ?
-        // board: {},
         orientation: '',
         position: '',
         gameroomVisibility: true,
         gameVisibility: false,
+        chatText: []
     };
 
     this.socket = io.connect();
@@ -108,14 +107,18 @@ export default class Gameroom extends React.Component {
 
     const handleResign = (data) => {
       if (data.gameId == this.state.serverGame.id) {
-        // todo: if this fix works, not DRY with 'handleGameOver'
         this.setState(
-          {opponentID: '',
-          playerColor: '',
-          serverGame: {},
-          game: {},
-          orientation: '',
-          position: ''},
+          {
+            opponentID: '',
+            playerColor: '',
+            serverGame: {},
+            game: {},
+            orientation: '',
+            position: '',
+            gameroomVisibility: true,
+            gameVisibility: false,
+            chatText: []
+          },
         );
         this.toggleVisibilty();
         this.socket.emit('login', this.state.username);
@@ -146,6 +149,21 @@ export default class Gameroom extends React.Component {
       this.setState({usersOnline: remainingUsers});
       console.log(`usersOnline now are ${this.state.usersOnline}`);
     };
+
+    this.socket.on('chat message', function(msg){
+      console.log('just got this message:');
+      console.log(msg);
+      updateChatText(msg);
+    });
+
+    const updateChatText = (data) => {
+      console.log('in updateChatText');
+      let chatText = [...this.state.chatText];
+      chatText.push(data);
+      this.setState({chatText: chatText});
+      console.log(`chatText now is ${this.state.chatText}`);
+    }
+
 
   } // end of constructor
 
@@ -249,9 +267,16 @@ export default class Gameroom extends React.Component {
   }
 
   handleChatClick() {
-    const chatMessage = document.getElementById('m').value;
+    let chatMessage = document.getElementById('m').value;
+    console.log('sending this message:');
     console.log(chatMessage);
+    chatMessage = `${this.state.username}: ${chatMessage}`;
     this.socket.emit('chat message', chatMessage);
+    // TODO: refactor; not DRY with updateChatText
+    let chatText = [...this.state.chatText];
+    chatText.push(chatMessage);
+    this.setState({chatText: chatText});
+    // this clears form and keeps it from reloading the page
     const messageForm = document.getElementsByName('chatForm')[0];
     messageForm.reset();
     return false;
@@ -303,6 +328,13 @@ export default class Gameroom extends React.Component {
               />
             </div>
             <br />
+            <div className='chatMessages'>
+              <ul>
+                {this.state.chatText.map(message =>
+                  <li> { message } </li>
+                )}
+              </ul>
+            </div>
             <form className="chatForm" name="chatForm">
               <input type='text' id="m" />
               <button id="button" type="button" value="send" class="btn btn-primary btn-sm" onClick={() => this.handleChatClick()}>Submit</button>
