@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
+import Wrapper from './Wrapper';
 
 class Profile extends Component {
 
@@ -52,6 +54,8 @@ onSubmit = (e) => {
   render() {
     const { name, phonenum, status } = this.state;
     return (
+      <Wrapper>
+      <Navbar />
       <div className="container">
         <form className="form-profile" onSubmit={this.onSubmit}>
           <h2 className="form-profile-heading">Profile for {this.state.username}</h2>
@@ -62,7 +66,7 @@ onSubmit = (e) => {
           <label for="inputStatus">Status</label>
           <input type="text" className="form-control" placeholder="On-line" name="status" value={status} onChange={this.onChange} />
           <br />
-          <button className="btn btn-lg btn-primary" type="submit">Update</button>
+          <button className="btn btn-primary" type="submit">Update</button>
         </form>
         <div>
           <br />
@@ -71,6 +75,7 @@ onSubmit = (e) => {
           </Link>
         </div>
       </div>
+      </Wrapper>
     );
   }
 }
