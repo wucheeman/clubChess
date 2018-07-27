@@ -275,7 +275,9 @@ export default class Gameroom extends React.Component {
     this.toggleVisibilty();
   }
 
-  handleChatClick() {
+  handleChatClick(event) {
+    event.preventDefault();
+    console.log('got here');
     let chatMessage = document.getElementById('m').value;
     console.log('sending this message:');
     console.log(chatMessage);
@@ -289,6 +291,7 @@ export default class Gameroom extends React.Component {
     // this clears form and keeps it from reloading the page
     const messageForm = document.getElementsByName('chatForm')[0];
     messageForm.reset();
+
     return false;
   }
 
@@ -343,9 +346,10 @@ export default class Gameroom extends React.Component {
                 )}
               </ul>
             </div>
-            <form className="chatForm" name="chatForm">
+            <form className="chatForm" name="chatForm" onSubmit={(ev) => this.handleChatClick(ev)}>
               <input type='text' id="m" />
-              <button id="button" type="button" value="send" class="btn btn-primary btn-sm" onClick={() => this.handleChatClick()}>Submit</button>
+              {/* <button id="button" type="button" value="send" class="btn btn-primary btn-sm" onClick={() => this.handleChatClick()}>Submit</button> */}
+              <button id="button" type="submit" value="send" class="btn btn-primary btn-sm">Submit</button>
             </form>
           </div>
          : null }
