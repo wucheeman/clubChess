@@ -117,11 +117,15 @@ var activeGames = {};
       console.log(msg);
       console.log(socket.userId);
       delete lobbyUsers[socket.userId];
-      //socket.broadcast.emit('leavelobby', socket.userId);
-      socket.broadcast.emit('logout', {
-        userId: socket.userId,
-        gameId: socket.gameId
-      });
+
+      // uncommented in debugging effort
+      socket.broadcast.emit('leavelobby', socket.userId);
+
+      
+      // socket.broadcast.emit('logout', {
+      //   userId: socket.userId,
+      //   gameId: socket.gameId
+      // });
     });
 
   // TODO: fix bug # 1

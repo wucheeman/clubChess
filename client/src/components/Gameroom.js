@@ -7,6 +7,8 @@ import Chessboard from "chessboardjsx";
 // import HumanVsHuman from "./integrations/HumanVsHuman";
 import axios from 'axios';
 import './Chat.css';
+import Wrapper from './Wrapper';
+import "./Navbar";
 
 export default class Gameroom extends React.Component {
 
@@ -136,8 +138,9 @@ export default class Gameroom extends React.Component {
       console.log('got user logout message re:');
       console.log(msg);
       removeUser(msg.userId);
+      // TODO handle case when user reloaded
       // for case when user reloaded during game
-      handleResign(msg);
+      //handleResign(msg);
     });
 
     const removeUser = (userId) => {
@@ -271,6 +274,7 @@ export default class Gameroom extends React.Component {
         chatText: []
       },
     );
+    console.log('in handleOverClick, about to emit login');
     this.socket.emit('login', this.state.username);
     this.toggleVisibilty();
   }
@@ -303,16 +307,29 @@ export default class Gameroom extends React.Component {
 
   render() {
     return (
+      <Wrapper>
+
+      <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
+        <Link className="navbar-brand pr-5 mr-5" to="/">
+          Club Chess
+        </Link>
+        <div>
+          <button className="btn btn-primary" onClick={ () => { } }>Logout</button>
+        </div>
+      </nav>
+
+
       <div className='containerpage'>
       {this.state.gameroomVisibility ? 
         <div className="page gameroom" id='page-gameroom'>
           <h1>Game Room</h1>
             <h4 id='userLabel'>Enjoy your game, {this.state.username}!</h4>
-            <h3>Active games</h3>
+            {/* <h3>Active games</h3>
             <div id='gamesList'>
               No active games
             </div>
-            <Link to="/game">Game On!</Link>
+            <Link to="/game">Game On!</Link> */}
+            <br />
             <h3>Online players</h3>
               <div id='userList'>
                 {this.state.usersOnline.map(user => 
@@ -356,7 +373,8 @@ export default class Gameroom extends React.Component {
 
          <div>
        </div>
-      </div>  
+      </div> 
+      </Wrapper> 
     );
   } // end of render
 }
