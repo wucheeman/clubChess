@@ -138,9 +138,14 @@ export default class Gameroom extends React.Component {
       console.log('got user logout message re:');
       console.log(msg);
       removeUser(msg.userId);
-      // TODO handle case when user reloaded
+
+      // handle when user disconnected ?
+      if (msg.gameId) {
+        console.log(msg.gameId);
+        handleResign(msg);
+      }
       // for case when user reloaded during game
-      //handleResign(msg);
+
     });
 
     const removeUser = (userId) => {
@@ -152,6 +157,7 @@ export default class Gameroom extends React.Component {
       console.log(`after removal, usersOnline is ${remainingUsers}`)
       this.setState({usersOnline: remainingUsers});
       console.log(`usersOnline now are ${this.state.usersOnline}`);
+
     };
 
     this.socket.on('chat message', function(msg){
