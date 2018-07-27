@@ -6,6 +6,7 @@ import Chessboard from "chessboardjsx";
 // TODO: delete this and file
 // import HumanVsHuman from "./integrations/HumanVsHuman";
 import axios from 'axios';
+import './Chat.css';
 
 export default class Gameroom extends React.Component {
 
@@ -19,12 +20,11 @@ export default class Gameroom extends React.Component {
         playerColor: '',
         serverGame: {},
         game: {},
-        // no need for this with Chessboard component ?
-        // board: {},
         orientation: '',
         position: '',
         gameroomVisibility: true,
         gameVisibility: false,
+        chatText: []
     };
 
     this.socket = io.connect();
@@ -107,14 +107,19 @@ export default class Gameroom extends React.Component {
 
     const handleResign = (data) => {
       if (data.gameId == this.state.serverGame.id) {
-        // todo: if this fix works, not DRY with 'handleGameOver'
         this.setState(
-          {opponentID: '',
-          playerColor: '',
-          serverGame: {},
-          game: {},
-          orientation: '',
-          position: ''},
+          {
+            opponentID: '',
+            playerColor: '',
+            serverGame: {},
+            game: {},
+            orientation: '',
+            position: '',
+            // do not uncomment: left here to underline this message!
+            // gameroomVisibility: true,
+            // gameVisibility: false,
+            chatText: []
+          },
         );
         this.toggleVisibilty();
         this.socket.emit('login', this.state.username);
@@ -145,6 +150,21 @@ export default class Gameroom extends React.Component {
       this.setState({usersOnline: remainingUsers});
       console.log(`usersOnline now are ${this.state.usersOnline}`);
     };
+
+    this.socket.on('chat message', function(msg){
+      console.log('just got this message:');
+      console.log(msg);
+      updateChatText(msg);
+    });
+
+    const updateChatText = (data) => {
+      console.log('in updateChatText');
+      let chatText = [...this.state.chatText];
+      // chatText.push(data);
+      chatText.unshift(data);
+      this.setState({chatText: chatText});
+      console.log(`chatText now is ${this.state.chatText}`);
+    }
 
 
   } // end of constructor
@@ -235,17 +255,44 @@ export default class Gameroom extends React.Component {
 
   handleOverClick() {
     console.log('handling game over click');
+    // not DRY with handleResign!
     this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame.id});
-            this.setState(
-          {opponentID: '',
-          playerColor: '',
-          serverGame: {},
-          game: {},
-          orientation: '',
-          position: ''},
-        );
+    this.setState(
+      {
+        opponentID: '',
+        playerColor: '',
+        serverGame: {},
+        game: {},
+        orientation: '',
+        position: '',
+        // do not uncomment: left here to underline this message!
+        // gameroomVisibility: true,
+        // gameVisibility: false,
+        chatText: []
+      },
+    );
     this.socket.emit('login', this.state.username);
     this.toggleVisibilty();
+  }
+
+  handleChatClick(event) {
+    event.preventDefault();
+    console.log('got here');
+    let chatMessage = document.getElementById('m').value;
+    console.log('sending this message:');
+    console.log(chatMessage);
+    chatMessage = `${this.state.username}: ${chatMessage}`;
+    this.socket.emit('chat message', chatMessage);
+    // TODO: refactor; not DRY with updateChatText
+    let chatText = [...this.state.chatText];
+    // chatText.push(chatMessage);
+    chatText.unshift(chatMessage);
+    this.setState({chatText: chatText});
+    // this clears form and keeps it from reloading the page
+    const messageForm = document.getElementsByName('chatForm')[0];
+    messageForm.reset();
+
+    return false;
   }
 
   handleLobbyClick() {
@@ -260,7 +307,7 @@ export default class Gameroom extends React.Component {
       {this.state.gameroomVisibility ? 
         <div className="page gameroom" id='page-gameroom'>
           <h1>Game Room</h1>
-            <h4 id='userLabel'>Good playing, {this.state.username}</h4>
+            <h4 id='userLabel'>Enjoy your game, {this.state.username}!</h4>
             <h3>Active games</h3>
             <div id='gamesList'>
               No active games
@@ -276,11 +323,12 @@ export default class Gameroom extends React.Component {
             <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button>
         </div>
         : null }
-        <button onClick={() => this.toggleVisibilty()}>Click Me</button>
+
+
         {this.state.gameVisibility ? 
           <div className="page game" id='page-game'>
             <div className='gameButtons'>
-              <button id='game-back' className="btn btn-primary" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
+              <button id='game-back' className="btn btn-primary btn-sm" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
             </div>
             <div style={boardsContainer}>
               <Chessboard
@@ -290,14 +338,30 @@ export default class Gameroom extends React.Component {
                 onDrop={this.onDrop}
               />
             </div>
+            <br />
+            <div className='chatMessages'>
+              <ul className='chatBox'>
+                {this.state.chatText.map(message =>
+                  <li className='chatEntry'> { message } </li>
+                )}
+              </ul>
+            </div>
+            <form className="chatForm" name="chatForm" onSubmit={(ev) => this.handleChatClick(ev)}>
+              <input type='text' id="m" />
+              {/* <button id="button" type="button" value="send" class="btn btn-primary btn-sm" onClick={() => this.handleChatClick()}>Submit</button> */}
+              <button id="button" type="submit" value="send" class="btn btn-primary btn-sm">Submit</button>
+            </form>
           </div>
          : null }
+
+         <div>
+       </div>
       </div>  
     );
   } // end of render
 }
 
-
+// TODO: move to stylesheet
 const boardsContainer = {
   display: "flex",
   justifyContent: "center",

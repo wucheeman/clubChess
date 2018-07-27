@@ -68,7 +68,6 @@ class Lobby extends Component {
             To Update Your Profile
           </Link>
           </div>
-
         </div>
       </div>
     );

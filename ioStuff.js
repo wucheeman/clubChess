@@ -6,10 +6,10 @@ var activeGames = {};
 
   io.on('connection', function(socket){
     console.log('a user connected via socket.io');
-    socket.on('chat message', function(msg) {
-      console.log('message: ' + msg);
+    // socket.on('chat message', function(msg) {
+    //   console.log('message: ' + msg);
       // io.emit('chat message', msg);
-    });
+    // });
 
     socket.on('login', function(userId) {
       doLogin(socket, userId);
@@ -144,13 +144,21 @@ var activeGames = {};
       });
     });
 
+    // for chat functionality in gameroom games
+    socket.on('chat message', function(msg) {
+      console.log('message: ' + msg);
+      // io.emit('chat message', msg);
+      socket.broadcast.emit('chat message', msg);
+    });
+
+    //TODO: cleanup unless somehow these are needed
     /////////////////////
     // Dashboard messages 
     /////////////////////
-    socket.on('dashboardlogin', function() {
-      console.log('dashboard joined');
-      socket.emit('dashboardlogin', {games: activeGames}); 
-    });
+    // socket.on('dashboardlogin', function() {
+    //   console.log('dashboard joined');
+    //   socket.emit('dashboardlogin', {games: activeGames}); 
+    // });
 
   }); // end of io.on('connection'...)
 
