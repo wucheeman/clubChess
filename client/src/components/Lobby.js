@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from './Navbar';
+import Wrapper from './Wrapper';
 
 class Lobby extends Component {
 
@@ -31,21 +33,24 @@ class Lobby extends Component {
       });
   }
 
-  logout = () => {
-    sessionStorage.removeItem('jwtToken');
-    window.location.reload();
-  }
+  // logout = () => {
+  //   sessionStorage.removeItem('jwtToken');
+  //   window.location.reload();
+  // }
 
   render() {
     return (
+      <Wrapper>
+      <Navbar />
       <div className="container">
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">
               CLUB LOBBY &nbsp;
-              {sessionStorage.getItem('jwtToken') &&
-                <button className="btn btn-primary" onClick={this.logout}>Logout</button>
-              }
+              {/* TODO: delete during cleanup; get the &nbsp too */}
+              {/* {sessionStorage.getItem('jwtToken') && */}
+                {/* <button className="btn btn-primary" onClick={this.logout}>Logout</button> */}
+              {/* } */}
             </h3>
             <h6>
               <br />
@@ -70,6 +75,7 @@ class Lobby extends Component {
           </div>
         </div>
       </div>
+      </Wrapper>
     );
   }
 }
