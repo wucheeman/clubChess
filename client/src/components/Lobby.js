@@ -82,14 +82,6 @@ class Lobby extends Component {
 
 export default Lobby;
 
-
-
-
-
-
-
-
-
 // Default code
 // import React, { Component } from 'react';
 // import logo from './logo.svg';
