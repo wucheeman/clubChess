@@ -56,6 +56,15 @@ onSubmit = (e) => {
     return (
       <Wrapper>
       <Navbar />
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Lobby</a></li>
+            <li class="breadcrumb-item"><a href="/directory">Directory</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Profile</li>
+          </ol>
+        </nav>
+      </div>
       <div className="container">
         <form className="form-profile" onSubmit={this.onSubmit}>
           <h2 className="form-profile-heading">Profile for {this.state.username}</h2>
