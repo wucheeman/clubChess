@@ -139,7 +139,7 @@ export default class Gameroom extends React.Component {
       console.log(msg);
       removeUser(msg.userId);
 
-      // handle when user disconnected ?
+      // handle when user disconnected
       if (msg.gameId) {
         console.log(msg.gameId);
         handleResign(msg);
@@ -285,6 +285,36 @@ export default class Gameroom extends React.Component {
     this.toggleVisibilty();
   }
 
+  handleInGameLogOut() {
+    console.log('handling game lock out ');
+    let chatMessage = this.state.username + this.state.serverGame.id;
+    this.socket.emit('chat message', chatMessage);
+    // this.socket.emit('chat message' `${this.state.username}, ${this.state.serverGame.id}`)
+    // not DRY with handleResign!
+    this.socket.emit('disconnect', {userId: this.state.username, gameId: this.state.serverGame.id});
+    // resetting state, just to be sure; TODO: refactor
+    this.setState(
+      {
+        opponentID: '',
+        playerColor: '',
+        serverGame: {},
+        game: {},
+        orientation: '',
+        position: '',
+        // do not uncomment: left here to underline this message!
+        // gameroomVisibility: true,
+        // gameVisibility: false,
+        chatText: []
+      },
+    );
+    sessionStorage.removeItem('jwtToken');
+    window.location.href = "/";
+    // console.log('in handleOverClick, about to emit login');
+    // this.socket.emit('login', this.state.username);
+    // this.toggleVisibilty();
+  }
+
+
   handleChatClick(event) {
     event.preventDefault();
     console.log('got here');
@@ -306,28 +336,37 @@ export default class Gameroom extends React.Component {
   }
 
   handleLobbyClick() {
-    console.log( this.state.username + ' ia going back to lobby');
+    console.log( this.state.username + ' is going back to lobby');
     this.socket.emit('leave-room', this.state.username);
     window.location.href = "/";
   }
 
+  // TODO: DRY out the Navbars; need a logout component that can handle different cases
   render() {
     return (
-      <Wrapper>
 
-      <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-        <Link className="navbar-brand pr-5 mr-5" to="/">
-          Club Chess
-        </Link>
-        <div>
-          <button className="btn btn-primary" onClick={ () => { } }>Logout</button>
-        </div>
-      </nav>
+
 
 
       <div className='containerpage'>
       {this.state.gameroomVisibility ? 
-        <div className="page gameroom" id='page-gameroom'>
+
+      <Wrapper>
+        <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
+          <Link className="navbar-brand pr-5 mr-5" to="/">
+            Club Chess
+          </Link>
+          <div>
+            <button className="btn btn-primary" onClick={ () => {
+              // code is wet, too!
+              sessionStorage.removeItem('jwtToken');
+              this.handleLobbyClick();
+              }
+            }>Logout</button>
+          </div>
+        </nav>
+
+       <div className="page gameroom" id='page-gameroom'>
           <h1>Game Room</h1>
             <h4 id='userLabel'>Enjoy your game, {this.state.username}!</h4>
             {/* <h3>Active games</h3>
@@ -345,10 +384,25 @@ export default class Gameroom extends React.Component {
             {/* <Link to="/">Back to Lobby</Link> */}
             <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button>
         </div>
+        </Wrapper> 
         : null }
 
 
         {this.state.gameVisibility ? 
+
+<Wrapper>
+<nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
+  <Link className="navbar-brand pr-5 mr-5" to="/">
+    Club Chess
+  </Link>
+  <div>
+    <button className="btn btn-primary" onClick={ () => {
+      this.handleInGameLogOut();
+      }
+    }>Logout</button>
+  </div>
+</nav>
+
           <div className="page game" id='page-game'>
             <div className='gameButtons'>
               <button id='game-back' className="btn btn-primary btn-sm" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
@@ -375,12 +429,13 @@ export default class Gameroom extends React.Component {
               <button id="button" type="submit" value="send" class="btn btn-primary btn-sm">Submit</button>
             </form>
           </div>
+          </Wrapper> 
          : null }
 
          <div>
        </div>
       </div> 
-      </Wrapper> 
+
     );
   } // end of render
 }
