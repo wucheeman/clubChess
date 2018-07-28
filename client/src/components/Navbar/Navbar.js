@@ -2,12 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-// Depending on the current path, this component sets the "active" class on the appropriate navigation link item
 const Navbar = props => (
   <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-    <Link className="navbar-brand pr-5 mr-5" to="/">
+    <div>
+    <img src={require('./../../img/navbarKnight.png')} alt="chess piece" />
+    <h3 className="navbar-brand pr-5 mr-5">
       Club Chess
-    </Link>
+    </h3>
+    </div>
     <div>
       <button className="btn btn-primary" onClick={ () => {
             sessionStorage.removeItem('jwtToken');

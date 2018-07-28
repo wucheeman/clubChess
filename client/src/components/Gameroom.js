@@ -345,17 +345,17 @@ export default class Gameroom extends React.Component {
   render() {
     return (
 
-
-
-
       <div className='containerpage'>
       {this.state.gameroomVisibility ? 
 
       <Wrapper>
         <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-          <Link className="navbar-brand pr-5 mr-5" to="/">
+        <div>
+          <img src={require('./../img/navbarKnight.png')} alt="chess piece" />
+          <h3 className="navbar-brand pr-5 mr-5">
             Club Chess
-          </Link>
+          </h3>
+        </div>
           <div>
             <button className="btn btn-primary" onClick={ () => {
               // code is wet, too!
@@ -365,7 +365,15 @@ export default class Gameroom extends React.Component {
             }>Logout</button>
           </div>
         </nav>
-
+        <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#" onClick={() => this.handleLobbyClick()}>Lobby</a></li>
+            {/* <li class="breadcrumb-item"><Link to="/">Back to Lobby</Link></li> */}
+            <li class="breadcrumb-item active" aria-current="page">Game Room</li>
+          </ol>
+        </nav>
+      </div>
        <div className="page gameroom" id='page-gameroom'>
           <h1>Game Room</h1>
             <h4 id='userLabel'>Enjoy your game, {this.state.username}!</h4>
@@ -381,8 +389,9 @@ export default class Gameroom extends React.Component {
                   <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm">{user}</button>
                 )}
               </div>
+              {/* TODO: Delete these in cleanup */}
             {/* <Link to="/">Back to Lobby</Link> */}
-            <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button>
+            {/* <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button> */}
         </div>
         </Wrapper> 
         : null }
@@ -392,9 +401,12 @@ export default class Gameroom extends React.Component {
 
 <Wrapper>
 <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-  <Link className="navbar-brand pr-5 mr-5" to="/">
-    Club Chess
-  </Link>
+<div>
+          <img src={require('./../img/navbarKnight.png')} alt="chess piece" />
+          <h3 className="navbar-brand pr-5 mr-5">
+            Club Chess
+          </h3>
+        </div>
   <div>
     <button className="btn btn-primary" onClick={ () => {
       this.handleInGameLogOut();
