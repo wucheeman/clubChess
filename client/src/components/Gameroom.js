@@ -345,17 +345,17 @@ export default class Gameroom extends React.Component {
   render() {
     return (
 
-
-
-
       <div className='containerpage'>
       {this.state.gameroomVisibility ? 
 
       <Wrapper>
         <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-          <Link className="navbar-brand pr-5 mr-5" to="/">
+        <div>
+          <img src={require('./../img/navbarKnight.png')} alt="chess piece" />
+          <h3 className="navbar-brand pr-5 mr-5">
             Club Chess
-          </Link>
+          </h3>
+        </div>
           <div>
             <button className="btn btn-primary" onClick={ () => {
               // code is wet, too!
@@ -401,9 +401,12 @@ export default class Gameroom extends React.Component {
 
 <Wrapper>
 <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-  <Link className="navbar-brand pr-5 mr-5" to="/">
-    Club Chess
-  </Link>
+<div>
+          <img src={require('./../img/navbarKnight.png')} alt="chess piece" />
+          <h3 className="navbar-brand pr-5 mr-5">
+            Club Chess
+          </h3>
+        </div>
   <div>
     <button className="btn btn-primary" onClick={ () => {
       this.handleInGameLogOut();
