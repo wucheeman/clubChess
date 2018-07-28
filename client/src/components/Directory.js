@@ -42,6 +42,14 @@ class Directory extends Component {
     return (
       <Wrapper>
       <Navbar />
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Lobby</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Directory</li>
+          </ol>
+        </nav>
+      </div>
       <div className="container">
         <div className="panel panel-default">
           <div className="panel-heading">
