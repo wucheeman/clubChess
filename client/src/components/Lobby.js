@@ -58,13 +58,13 @@ class Lobby extends Component {
           <div className="panel panel-default">
 
             <div className="panel-heading">
-              <h3 className="panel-title">
-                CLUB LOBBY &nbsp;
+              <h2 className="panel-title">
+                Club Lobby &nbsp;
                 {/* TODO: delete during cleanup; get the &nbsp too */}
                 {/* {sessionStorage.getItem('jwtToken') && */}
                   {/* <button className="btn btn-primary" onClick={this.logout}>Logout</button> */}
                 {/* } */}
-              </h3>
+              </h2>
               <h6 className='userWelcome'>
                 Welcome, {sessionStorage.getItem('username')}!
               </h6>
