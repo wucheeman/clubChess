@@ -169,8 +169,8 @@ export default class Gameroom extends React.Component {
     const updateChatText = (data) => {
       console.log('in updateChatText');
       let chatText = [...this.state.chatText];
-      // chatText.push(data);
-      chatText.unshift(data);
+      chatText.push(data);
+      // chatText.unshift(data);
       this.setState({chatText: chatText});
       console.log(`chatText now is ${this.state.chatText}`);
     }
@@ -325,8 +325,8 @@ export default class Gameroom extends React.Component {
     this.socket.emit('chat message', chatMessage);
     // TODO: refactor; not DRY with updateChatText
     let chatText = [...this.state.chatText];
-    // chatText.push(chatMessage);
-    chatText.unshift(chatMessage);
+    chatText.push(chatMessage);
+    // chatText.unshift(chatMessage);
     this.setState({chatText: chatText});
     // this clears form and keeps it from reloading the page
     const messageForm = document.getElementsByName('chatForm')[0];
@@ -346,103 +346,134 @@ export default class Gameroom extends React.Component {
     return (
 
       <div className='containerpage'>
-      {this.state.gameroomVisibility ? 
 
-      <Wrapper>
-        <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-        <div>
-          <img src={require('./../img/navbarKnight.png')} alt="chess piece" />
-          <h3 className="navbar-brand pr-5 mr-5">
-            Club Chess
-          </h3>
-        </div>
-          <div>
-            <button className="btn btn-primary" onClick={ () => {
-              // code is wet, too!
-              sessionStorage.removeItem('jwtToken');
-              this.handleLobbyClick();
-              }
-            }>Logout</button>
-          </div>
-        </nav>
-        <div>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#" onClick={() => this.handleLobbyClick()}>Lobby</a></li>
-            {/* <li class="breadcrumb-item"><Link to="/">Back to Lobby</Link></li> */}
-            <li class="breadcrumb-item active" aria-current="page">Game Room</li>
-          </ol>
-        </nav>
-      </div>
-       <div className="page gameroom" id='page-gameroom'>
-          <h1>Game Room</h1>
-            <h4 id='userLabel'>Enjoy your game, {this.state.username}!</h4>
-            {/* <h3>Active games</h3>
-            <div id='gamesList'>
-              No active games
-            </div>
-            <Link to="/game">Game On!</Link> */}
-            <br />
-            <h3>Online players</h3>
-              <div id='userList'>
-                {this.state.usersOnline.map(user => 
-                  <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm">{user}</button>
-                )}
+        {/* Start of gameroom division of page */}
+        {this.state.gameroomVisibility ? 
+          <Wrapper>
+
+            <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
+              <div>
+                <img className='clubLogo pr-3 pb-2' src={require('./../img/navbarKnight.png')} alt="chess piece" />
+                <div className="navbar-brand">
+                  <span className='navbar-text text-white pt-2'>
+                    Club Chess
+                  </span>
+                </div>
               </div>
-              {/* TODO: Delete these in cleanup */}
-            {/* <Link to="/">Back to Lobby</Link> */}
-            {/* <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button> */}
-        </div>
-        </Wrapper> 
+              <div>
+                <button className="btn btn-primary" onClick={ () => {
+                    // code is wet, too!
+                    sessionStorage.removeItem('jwtToken');
+                    this.handleLobbyClick();
+                  }
+                }>Logout</button>
+              </div>
+            </nav>
+
+            <div className='container ml-5'>
+
+              <div>
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb pl-0">
+                    <li class="breadcrumb-item"><a href="#" onClick={() => this.handleLobbyClick()}>Lobby</a></li>
+                    {/* <li class="breadcrumb-item"><Link to="/">Back to Lobby</Link></li> */}
+                    <li class="breadcrumb-item active" aria-current="page">Game Room</li>
+                  </ol>
+                </nav>
+              </div>
+
+              <div className="page gameroom" id='page-gameroom'>
+                  <h2>Game Room</h2>
+                    <h6 id='userLabel'>Enjoy your game, {this.state.username}!</h6>
+                    {/* <h3>Active games</h3>
+                    <div id='gamesList'>
+                      No active games
+                    </div>
+                    <Link to="/game">Game On!</Link> */}
+                    <br />
+                    <h4 className='pb-1'>Online players</h4>
+                      <div id='userList'>
+                        {this.state.usersOnline.map(user =>
+                          <div className='row w-25 pl-3 pb-3'> 
+                            <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm btn-block">{user}</button>
+                          </div>
+                        )}
+                      </div>
+                      {/* TODO: Delete these in cleanup */}
+                    {/* <Link to="/">Back to Lobby</Link> */}
+                    {/* <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button> */}
+              </div>
+
+            </div>
+          </Wrapper> 
         : null }
 
-
+        {/* Start of game division of page */}
         {this.state.gameVisibility ? 
+          <Wrapper>
 
-<Wrapper>
-<nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-<div>
-          <img src={require('./../img/navbarKnight.png')} alt="chess piece" />
-          <h3 className="navbar-brand pr-5 mr-5">
-            Club Chess
-          </h3>
-        </div>
-  <div>
-    <button className="btn btn-primary" onClick={ () => {
-      this.handleInGameLogOut();
-      }
-    }>Logout</button>
-  </div>
-</nav>
+            <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
+            <div>
+              <img className='clubLogo pr-3 pb-2' src={require('./../img/navbarKnight.png')} alt="chess piece" />
+              <div className="navbar-brand">
+                  <span className='navbar-text text-white pt-2'>
+                    Club Chess
+                  </span>
+                </div>
+            </div>
+              <div>
+                <button className="btn btn-primary" onClick={ () => {
+                  this.handleInGameLogOut();
+                  }
+                }>Logout</button>
+              </div>
+            </nav>
 
-          <div className="page game" id='page-game'>
-            <div className='gameButtons'>
-              <button id='game-back' className="btn btn-primary btn-sm" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
+            <div className="page game" id='page-game'>
+
+              <div className='row'>
+
+                <div className='col-sm'>
+                  <div className='pt-5 pb-0' style={boardsContainer}>
+                    <Chessboard
+                      width={320}
+                      position={this.state.position}
+                      orientation={this.state.orientation}
+                      onDrop={this.onDrop}
+                    />
+                  </div>
+                  <div className='gameButtons text-center pt-3'>
+                    <button id='game-back' className="btn btn-primary btn-sm" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
+                  </div>
+
+                </div>
+
+                <div className='col-sm'>
+                  <div className='chatMessages pt-5 pb-0'>
+                    <ul className='chatBox mh-100 w-75 list-unstyled' style={{"height": "320px"}}>
+                      {this.state.chatText.map(message =>
+                        <li className='chatEntry'> { message } </li>
+                      )}
+                    </ul>
+                  </div>
+
+                  <form className="chatForm form-row align-items-center" name="chatForm" onSubmit={(ev) => this.handleChatClick(ev)}>
+                  <div className='col-sm-1'></div>
+                    <div className='col-sm-6'>
+                      <input type='form-control-plaintext' id="m" className='chatMsg w-100' />
+                    </div>
+                    <div className='col-sm-3'>
+                      <button className='pl-5' id="button" type="submit" value="send" class="btn btn-primary btn-sm">Submit</button>
+                    </div>
+                    {/* <div className='col-sm-1'></div> */}
+                  </form>
+                </div>
+
+              </div>
+
             </div>
-            <div style={boardsContainer}>
-              <Chessboard
-                width={320}
-                position={this.state.position}
-                orientation={this.state.orientation}
-                onDrop={this.onDrop}
-              />
-            </div>
-            <br />
-            <div className='chatMessages'>
-              <ul className='chatBox'>
-                {this.state.chatText.map(message =>
-                  <li className='chatEntry'> { message } </li>
-                )}
-              </ul>
-            </div>
-            <form className="chatForm" name="chatForm" onSubmit={(ev) => this.handleChatClick(ev)}>
-              <input type='text' id="m" />
-              {/* <button id="button" type="button" value="send" class="btn btn-primary btn-sm" onClick={() => this.handleChatClick()}>Submit</button> */}
-              <button id="button" type="submit" value="send" class="btn btn-primary btn-sm">Submit</button>
-            </form>
-          </div>
           </Wrapper> 
-         : null }
+        : null }
 
          <div>
        </div>

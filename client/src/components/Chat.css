@@ -5,9 +5,13 @@
     /* height: 30 px; */
     border-style: solid;
     border-color: black;
-    font-weight: 900;
+    font-size: 14px;
+    /* font-weight: 900; */
 }
 
+.chatMsg {
+  font-size: 14px;
+}
 
 /* #chatbox{ margin: 0; padding: 0; box-sizing: border-box; }
 /* body { font: 13px Helvetica, Arial; } */
