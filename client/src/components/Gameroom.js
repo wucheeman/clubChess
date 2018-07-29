@@ -347,85 +347,87 @@ export default class Gameroom extends React.Component {
 
       <div className='containerpage'>
 
-      {/* Start of gameroom division of page */}
-      {this.state.gameroomVisibility ? 
-        <Wrapper>
+        {/* Start of gameroom division of page */}
+        {this.state.gameroomVisibility ? 
+          <Wrapper>
 
-          <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-          <div>
-            <img className='clubLogo pr-3 pb-2' src={require('./../img/navbarKnight.png')} alt="chess piece" />
-            <div className="navbar-brand">
-              <span className='navbar-text text-white pt-2'>
-                Club Chess
-              </span>
-            </div>
-          </div>
-            <div>
-              <button className="btn btn-primary" onClick={ () => {
-                  // code is wet, too!
-                  sessionStorage.removeItem('jwtToken');
-                  this.handleLobbyClick();
-                }
-              }>Logout</button>
-            </div>
-          </nav>
+            <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
+              <div>
+                <img className='clubLogo pr-3 pb-2' src={require('./../img/navbarKnight.png')} alt="chess piece" />
+                <div className="navbar-brand">
+                  <span className='navbar-text text-white pt-2'>
+                    Club Chess
+                  </span>
+                </div>
+              </div>
+              <div>
+                <button className="btn btn-primary" onClick={ () => {
+                    // code is wet, too!
+                    sessionStorage.removeItem('jwtToken');
+                    this.handleLobbyClick();
+                  }
+                }>Logout</button>
+              </div>
+            </nav>
 
-          <div className='container ml-5'>
+            <div className='container ml-5'>
 
-            <div>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb pl-0">
-                  <li class="breadcrumb-item"><a href="#" onClick={() => this.handleLobbyClick()}>Lobby</a></li>
-                  {/* <li class="breadcrumb-item"><Link to="/">Back to Lobby</Link></li> */}
-                  <li class="breadcrumb-item active" aria-current="page">Game Room</li>
-                </ol>
-              </nav>
-            </div>
+              <div>
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb pl-0">
+                    <li class="breadcrumb-item"><a href="#" onClick={() => this.handleLobbyClick()}>Lobby</a></li>
+                    {/* <li class="breadcrumb-item"><Link to="/">Back to Lobby</Link></li> */}
+                    <li class="breadcrumb-item active" aria-current="page">Game Room</li>
+                  </ol>
+                </nav>
+              </div>
 
-            <div className="page gameroom" id='page-gameroom'>
-                <h2>Game Room</h2>
-                  <h6 id='userLabel'>Enjoy your game, {this.state.username}!</h6>
-                  {/* <h3>Active games</h3>
-                  <div id='gamesList'>
-                    No active games
-                  </div>
-                  <Link to="/game">Game On!</Link> */}
-                  <br />
-                  <h4 className='pb-1'>Online players</h4>
-                    <div id='userList'>
-                      {this.state.usersOnline.map(user =>
-                        <div className='row w-25 pl-3 pb-3'> 
-                          <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm btn-block">{user}</button>
-                        </div>
-                      )}
+              <div className="page gameroom" id='page-gameroom'>
+                  <h2>Game Room</h2>
+                    <h6 id='userLabel'>Enjoy your game, {this.state.username}!</h6>
+                    {/* <h3>Active games</h3>
+                    <div id='gamesList'>
+                      No active games
                     </div>
-                    {/* TODO: Delete these in cleanup */}
-                  {/* <Link to="/">Back to Lobby</Link> */}
-                  {/* <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button> */}
+                    <Link to="/game">Game On!</Link> */}
+                    <br />
+                    <h4 className='pb-1'>Online players</h4>
+                      <div id='userList'>
+                        {this.state.usersOnline.map(user =>
+                          <div className='row w-25 pl-3 pb-3'> 
+                            <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm btn-block">{user}</button>
+                          </div>
+                        )}
+                      </div>
+                      {/* TODO: Delete these in cleanup */}
+                    {/* <Link to="/">Back to Lobby</Link> */}
+                    {/* <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button> */}
+              </div>
+
             </div>
+          </Wrapper> 
+        : null }
 
-          </div>
-        </Wrapper> 
-      : null }
-
-
+        {/* Start of game division of page */}
         {this.state.gameVisibility ? 
+          <Wrapper>
 
-<Wrapper>
-<nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-<div>
-          <img src={require('./../img/navbarKnight.png')} alt="chess piece" />
-          <h3 className="navbar-brand pr-5 mr-5">
-            Club Chess
-          </h3>
-        </div>
-  <div>
-    <button className="btn btn-primary" onClick={ () => {
-      this.handleInGameLogOut();
-      }
-    }>Logout</button>
-  </div>
-</nav>
+            <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
+            <div>
+              <img className='clubLogo pr-3 pb-2' src={require('./../img/navbarKnight.png')} alt="chess piece" />
+              <div className="navbar-brand">
+                  <span className='navbar-text text-white pt-2'>
+                    Club Chess
+                  </span>
+                </div>
+            </div>
+              <div>
+                <button className="btn btn-primary" onClick={ () => {
+                  this.handleInGameLogOut();
+                  }
+                }>Logout</button>
+              </div>
+            </nav>
 
           <div className="page game" id='page-game'>
             <div className='gameButtons'>
