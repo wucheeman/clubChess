@@ -48,6 +48,7 @@ onSubmit = (e) => {
   axios.post('/api/user/profile', { username, name, phonenum, status })
     .then((result) => {
       console.log(result);
+      window.location.href="/directory";
     });
   }
 
