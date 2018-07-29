@@ -42,47 +42,53 @@ class Lobby extends Component {
     return (
       <Wrapper>
       <Navbar />
-      <div>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Lobby</li>
-          </ol>
-        </nav>
-      </div>
-      <div className="container">
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">
-              CLUB LOBBY &nbsp;
-              {/* TODO: delete during cleanup; get the &nbsp too */}
-              {/* {sessionStorage.getItem('jwtToken') && */}
-                {/* <button className="btn btn-primary" onClick={this.logout}>Logout</button> */}
-              {/* } */}
-            </h3>
-            <h6>
-              <br />
-              Welcome to {sessionStorage.getItem('username')}!
-            </h6>
-          </div>
-          <div className="panel-body">
-          <br />
-          <Link to="/gameroom">
-            To the Game Room
-          </Link>
-          <br />
-          <br />
-          <Link to="/directory">
-            To the Member Directory
-          </Link>
-          <br />
-          <br />
-          <Link to="/profile">
-            To Update Your Profile
-          </Link>
-          </div>
+      <div className='container ml-5'>
+
+        <div>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb pl-0">
+              <li class="breadcrumb-item active" aria-current="page">Lobby</li>
+            </ol>
+          </nav>
         </div>
+
+        {/* <div className="container"> */}
+          <div className="panel panel-default">
+
+            <div className="panel-heading">
+              <h3 className="panel-title">
+                CLUB LOBBY &nbsp;
+                {/* TODO: delete during cleanup; get the &nbsp too */}
+                {/* {sessionStorage.getItem('jwtToken') && */}
+                  {/* <button className="btn btn-primary" onClick={this.logout}>Logout</button> */}
+                {/* } */}
+              </h3>
+              <h6 className='userWelcome'>
+                Welcome, {sessionStorage.getItem('username')}!
+              </h6>
+            </div>
+
+            <div className="panel-body">
+              <br />
+              <Link to="/gameroom">
+                To the Game Room
+              </Link>
+              <br />
+              <br />
+              <Link to="/directory">
+                To the Member Directory
+              </Link>
+              <br />
+              <br />
+              <Link to="/profile">
+                To Update Your Profile
+              </Link>
+            </div>
+          </div>
+        {/* </div> */}
       </div>
       </Wrapper>
+
     );
   }
 }
