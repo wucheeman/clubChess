@@ -429,34 +429,50 @@ export default class Gameroom extends React.Component {
               </div>
             </nav>
 
-          <div className="page game" id='page-game'>
-            <div className='gameButtons'>
-              <button id='game-back' className="btn btn-primary btn-sm" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
+            <div className="page game" id='page-game'>
+
+              <div className='row'>
+
+                <div className='col-sm'>
+                  <div className='pt-5 pb-0' style={boardsContainer}>
+                    <Chessboard
+                      width={320}
+                      position={this.state.position}
+                      orientation={this.state.orientation}
+                      onDrop={this.onDrop}
+                    />
+                  </div>
+                  <div className='gameButtons text-center pt-3'>
+                    <button id='game-back' className="btn btn-primary btn-sm" onClick={() => this.handleOverClick()}>Game Over/Resign</button>
+                  </div>
+
+                </div>
+
+                <div className='col-sm'>
+                  <div className='chatMessages pt-5 pb-0'>
+                    <ul className='chatBox mh-100 w-75 list-unstyled' style={{"height": "320px"}}>
+                      {this.state.chatText.map(message =>
+                        <li className='chatEntry'> { message } </li>
+                      )}
+                    </ul>
+                  </div>
+
+                  <form className="chatForm form-row align-items-center" name="chatForm" onSubmit={(ev) => this.handleChatClick(ev)}>
+                    <div className='col-sm-7'>
+                      <input type='text' id="m" className='w-100' />
+                    </div>
+                    <div className='col-sm-3'>
+                      <button className='pl-5' id="button" type="submit" value="send" class="btn btn-primary btn-sm">Submit</button>
+                    </div>
+                    <div className='col-sm-1'></div>
+                  </form>
+                </div>
+
+              </div>
+
             </div>
-            <div style={boardsContainer}>
-              <Chessboard
-                width={320}
-                position={this.state.position}
-                orientation={this.state.orientation}
-                onDrop={this.onDrop}
-              />
-            </div>
-            <br />
-            <div className='chatMessages'>
-              <ul className='chatBox'>
-                {this.state.chatText.map(message =>
-                  <li className='chatEntry'> { message } </li>
-                )}
-              </ul>
-            </div>
-            <form className="chatForm" name="chatForm" onSubmit={(ev) => this.handleChatClick(ev)}>
-              <input type='text' id="m" />
-              {/* <button id="button" type="button" value="send" class="btn btn-primary btn-sm" onClick={() => this.handleChatClick()}>Submit</button> */}
-              <button id="button" type="submit" value="send" class="btn btn-primary btn-sm">Submit</button>
-            </form>
-          </div>
           </Wrapper> 
-         : null }
+        : null }
 
          <div>
        </div>
