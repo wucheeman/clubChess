@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Wrapper from './Wrapper';
+import './Page.css';
 
 class Profile extends Component {
 
@@ -56,33 +57,39 @@ onSubmit = (e) => {
     return (
       <Wrapper>
       <Navbar />
-      <div>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Lobby</a></li>
-            <li class="breadcrumb-item"><a href="/directory">Directory</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Profile</li>
-          </ol>
-        </nav>
-      </div>
-      <div className="container">
-        <form className="form-profile" onSubmit={this.onSubmit}>
-          <h2 className="form-profile-heading">Profile for {this.state.username}</h2>
-          <label for="inputName" >Name</label>
-          <input type="text" className="form-control" placeholder="Jane Doe" name="name" value={name} onChange={this.onChange}/>
-          <label for="inputPhonenum" >Phone Number</label>
-          <input type="text" className="form-control" placeholder="123-1234" name="phonenum" value={phonenum} onChange={this.onChange} />
-          <label for="inputStatus">Status</label>
-          <input type="text" className="form-control" placeholder="On-line" name="status" value={status} onChange={this.onChange} />
-          <br />
-          <button className="btn btn-primary" type="submit">Update</button>
-        </form>
+      <div className='container ml-5'>
+
         <div>
-          <br />
-          <Link to="/directory">
-            To the Member Directory
-          </Link>
+          <nav aria-label="breadcrumb">
+            <ol className="breadcrumb pl-0">
+              <li className="breadcrumb-item"><a href="/">Lobby</a></li>
+              <li className="breadcrumb-item"><a href="/directory">Directory</a></li>
+              <li className="breadcrumb-item active" aria-current="page">Profile</li>
+            </ol>
+          </nav>
         </div>
+
+        {/* <div className="container"> */}
+          <form className="form-profile" onSubmit={this.onSubmit}>
+            <h3 className="form-profile-heading mb-0 pt-1">Profile for {this.state.username}</h3>
+            <label htmlFor="inputName" className='profileLabel pt-3' >Name</label>
+            <input type="text" className="form-control" placeholder="Jane Doe" name="name" value={name} onChange={this.onChange}/>
+            <label htmlFor="inputPhonenum" className='profileLabel pt-3'>Phone Number</label>
+            <input type="text" className="form-control" placeholder="123-1234" name="phonenum" value={phonenum} onChange={this.onChange} />
+            <label htmlFor="inputStatus" className='profileLabel pt-3'>Status</label>
+            <input type="text" className="form-control" placeholder="On-line" name="status" value={status} onChange={this.onChange} />
+            <br />
+            <button className="btn btn-primary" type="submit">Update</button>
+          </form>
+
+          {/* <div>
+            <br />
+            <Link to="/directory">
+              To the Member Directory
+            </Link>
+          </div> */}
+
+        {/* </div> */}
       </div>
       </Wrapper>
     );
