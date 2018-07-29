@@ -169,8 +169,8 @@ export default class Gameroom extends React.Component {
     const updateChatText = (data) => {
       console.log('in updateChatText');
       let chatText = [...this.state.chatText];
-      // chatText.push(data);
-      chatText.unshift(data);
+      chatText.push(data);
+      // chatText.unshift(data);
       this.setState({chatText: chatText});
       console.log(`chatText now is ${this.state.chatText}`);
     }
@@ -325,8 +325,8 @@ export default class Gameroom extends React.Component {
     this.socket.emit('chat message', chatMessage);
     // TODO: refactor; not DRY with updateChatText
     let chatText = [...this.state.chatText];
-    // chatText.push(chatMessage);
-    chatText.unshift(chatMessage);
+    chatText.push(chatMessage);
+    // chatText.unshift(chatMessage);
     this.setState({chatText: chatText});
     // this clears form and keeps it from reloading the page
     const messageForm = document.getElementsByName('chatForm')[0];
