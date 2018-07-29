@@ -42,43 +42,45 @@ class Directory extends Component {
     return (
       <Wrapper>
       <Navbar />
+      <div className='container ml-5'>
+
       <div>
         <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
+          <ol class="breadcrumb pl-0">
             <li class="breadcrumb-item"><a href="/">Lobby</a></li>
             <li class="breadcrumb-item active" aria-current="page">Directory</li>
           </ol>
         </nav>
       </div>
-      <div className="container">
+
+      {/* <div className="container"> */}
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h3 className="panel-title">
-              CLUB Directory &nbsp;
+            <h2 className="panel-title pb-1">
+              Club Directory &nbsp;
               {/* TODO: delete during cleanup; get the &nbsp */}
               {/* {sessionStorage.getItem('jwtToken') && */}
                 {/* <button className="btn btn-primary" onClick={this.logout}>Logout</button> */}
               {/* } */}
-            </h3>
-            <h6>
+            </h2>
+            {/* <h6>
               Welcome to {sessionStorage.getItem('username')}!
-            </h6>
+            </h6> */}
           </div>
           <div className="panel-body">
-            <table className="table table-stripe">
-              <thead>
+            <table className="table border-bottom">
+              <thead className='bg-secondary'>
                 <tr>
-                  <th>Status</th>
-                  <th>Name</th>
-                  <th>UserID</th>
-                  <th>Phone Number</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">UserID</th>
+                  <th scope="col">Phone Number</th>
                 </tr>
               </thead>
               <tbody>
                 {this.state.users.map(user =>
-                  <tr>
-                    {/* TODO: convert to opening game room to play that user */}
-                    <td><Link to={`/show/${user._id}`}>{user.status}</Link></td>
+                  <tr scope="row">
+                    <td>{user.status}</td>
                     <td>{user.name}</td>
                     <td>{user.username}</td>
                     <td>{user.phonenum}</td>
@@ -86,8 +88,18 @@ class Directory extends Component {
                 )}
               </tbody>
             </table>
+            {/* <hr className='mt-0' /> */}
+
+            <button className="btn btn-primary">
+                  <Link className='directoryUpdate text-white' to="/profile">
+                    Update Your Profile
+                  </Link>
+            </button>
+
           </div>
         </div>
+
+      {/* </div> */}
       </div>
       </Wrapper>
     );
