@@ -458,13 +458,14 @@ export default class Gameroom extends React.Component {
                   </div>
 
                   <form className="chatForm form-row align-items-center" name="chatForm" onSubmit={(ev) => this.handleChatClick(ev)}>
-                    <div className='col-sm-7'>
-                      <input type='text' id="m" className='w-100' />
+                  <div className='col-sm-1'></div>
+                    <div className='col-sm-6'>
+                      <input type='form-control-plaintext' id="m" className='chatMsg w-100' />
                     </div>
                     <div className='col-sm-3'>
                       <button className='pl-5' id="button" type="submit" value="send" class="btn btn-primary btn-sm">Submit</button>
                     </div>
-                    <div className='col-sm-1'></div>
+                    {/* <div className='col-sm-1'></div> */}
                   </form>
                 </div>
 
