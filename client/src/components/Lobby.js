@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
 import Wrapper from './Wrapper';
+import './Page.css';
+
 
 class Lobby extends Component {
 
