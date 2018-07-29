@@ -67,22 +67,41 @@ class Lobby extends Component {
                 Welcome, {sessionStorage.getItem('username')}!
               </h6>
             </div>
-
+            <br />
             <div className="panel-body">
-              <br />
-              <Link to="/gameroom">
-                To the Game Room
-              </Link>
-              <br />
-              <br />
-              <Link to="/directory">
-                To the Member Directory
-              </Link>
-              <br />
-              <br />
-              <Link to="/profile">
-                To Update Your Profile
-              </Link>
+              <div className='row'>
+                <div className='col-sm-4'>
+                  <Link to="/gameroom">
+                    To the Game Room
+                  </Link>
+                </div>
+                <div className='col-sm-8'>
+                  <p>Find other members who want to play chess now</p>
+                </div>
+              </div>
+
+              <div className='row'>
+                <div className='col-sm-4'>
+                  <Link to="/directory">
+                    To the Member Directory
+                  </Link>
+                </div>
+                <div className='col-sm-8'>
+                  <p>Find contact and other information on club members</p>
+                </div>
+              </div>
+
+              <div className='row'>
+                <div className='col-sm-4'>
+                  <Link to="/profile">
+                    To Update Your Profile
+                  </Link>
+                </div>
+                <div className='col-sm-8'>
+                  <p>Keep your contact information up-to-date</p>
+                </div>
+              </div>
+
             </div>
           </div>
         {/* </div> */}
