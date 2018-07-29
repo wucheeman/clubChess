@@ -48,8 +48,8 @@ class Lobby extends Component {
 
         <div>
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb pl-0">
-              <li class="breadcrumb-item active" aria-current="page">Lobby</li>
+            <ol className="breadcrumb pl-0">
+              <li className="breadcrumb-item active" aria-current="page">Lobby</li>
             </ol>
           </nav>
         </div>
