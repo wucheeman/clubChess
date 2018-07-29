@@ -2,7 +2,8 @@ nav.navbar.navbar-default {
   margin-bottom: 0;
 }
 
-.active a {
+/* TODO: delete during */
+/* .active a {
   color: green !important;
   font-weight: 600;
-}
+} */
