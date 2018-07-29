@@ -5,10 +5,12 @@ import "./Navbar.css";
 const Navbar = props => (
   <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
     <div>
-    <img src={require('./../../img/navbarKnight.png')} alt="chess piece" />
-    <h3 className="navbar-brand pr-5 mr-5">
-      Club Chess
-    </h3>
+    <img className='clubLogo pr-3 pb-2' src={require('./../../img/navbarKnight.png')} alt="chess piece" />
+    <div className="navbar-brand">
+      <span className='navbar-text text-white pt-2'>
+        Club Chess
+        </span>
+    </div>
     </div>
     <div>
       <button className="btn btn-primary" onClick={ () => {
