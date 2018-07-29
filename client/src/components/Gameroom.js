@@ -346,57 +346,67 @@ export default class Gameroom extends React.Component {
     return (
 
       <div className='containerpage'>
-      {this.state.gameroomVisibility ? 
 
-      <Wrapper>
-        <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
-        <div>
-          <img className='clubLogo pr-3 pb-2' src={require('./../img/navbarKnight.png')} alt="chess piece" />
-          <div className="navbar-brand">
-            <span className='navbar-text text-white pt-2'>
-              Club Chess
-            </span>
-          </div>
-        </div>
+      {/* Start of gameroom division of page */}
+      {this.state.gameroomVisibility ? 
+        <Wrapper>
+
+          <nav className="navbar navbar-expand-sm navbar-light bg-secondary pl-5 d-flex justify-content-between">
           <div>
-            <button className="btn btn-primary" onClick={ () => {
-              // code is wet, too!
-              sessionStorage.removeItem('jwtToken');
-              this.handleLobbyClick();
-              }
-            }>Logout</button>
-          </div>
-        </nav>
-        <div>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#" onClick={() => this.handleLobbyClick()}>Lobby</a></li>
-            {/* <li class="breadcrumb-item"><Link to="/">Back to Lobby</Link></li> */}
-            <li class="breadcrumb-item active" aria-current="page">Game Room</li>
-          </ol>
-        </nav>
-      </div>
-       <div className="page gameroom" id='page-gameroom'>
-          <h1>Game Room</h1>
-            <h4 id='userLabel'>Enjoy your game, {this.state.username}!</h4>
-            {/* <h3>Active games</h3>
-            <div id='gamesList'>
-              No active games
+            <img className='clubLogo pr-3 pb-2' src={require('./../img/navbarKnight.png')} alt="chess piece" />
+            <div className="navbar-brand">
+              <span className='navbar-text text-white pt-2'>
+                Club Chess
+              </span>
             </div>
-            <Link to="/game">Game On!</Link> */}
-            <br />
-            <h3>Online players</h3>
-              <div id='userList'>
-                {this.state.usersOnline.map(user => 
-                  <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm">{user}</button>
-                )}
-              </div>
-              {/* TODO: Delete these in cleanup */}
-            {/* <Link to="/">Back to Lobby</Link> */}
-            {/* <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button> */}
-        </div>
+          </div>
+            <div>
+              <button className="btn btn-primary" onClick={ () => {
+                  // code is wet, too!
+                  sessionStorage.removeItem('jwtToken');
+                  this.handleLobbyClick();
+                }
+              }>Logout</button>
+            </div>
+          </nav>
+
+          <div className='container ml-5'>
+
+            <div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb pl-0">
+                  <li class="breadcrumb-item"><a href="#" onClick={() => this.handleLobbyClick()}>Lobby</a></li>
+                  {/* <li class="breadcrumb-item"><Link to="/">Back to Lobby</Link></li> */}
+                  <li class="breadcrumb-item active" aria-current="page">Game Room</li>
+                </ol>
+              </nav>
+            </div>
+
+            <div className="page gameroom" id='page-gameroom'>
+                <h2>Game Room</h2>
+                  <h6 id='userLabel'>Enjoy your game, {this.state.username}!</h6>
+                  {/* <h3>Active games</h3>
+                  <div id='gamesList'>
+                    No active games
+                  </div>
+                  <Link to="/game">Game On!</Link> */}
+                  <br />
+                  <h4 className='pb-1'>Online players</h4>
+                    <div id='userList'>
+                      {this.state.usersOnline.map(user =>
+                        <div className='row w-25 pl-3 pb-3'> 
+                          <button onClick={this.handleInviteClick} value={user} className="btn btn-primary btm-sm btn-block">{user}</button>
+                        </div>
+                      )}
+                    </div>
+                    {/* TODO: Delete these in cleanup */}
+                  {/* <Link to="/">Back to Lobby</Link> */}
+                  {/* <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button> */}
+            </div>
+
+          </div>
         </Wrapper> 
-        : null }
+      : null }
 
 
         {this.state.gameVisibility ? 
