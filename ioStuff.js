@@ -21,12 +21,14 @@ var activeGames = {};
       if (!users[userId]) {
         console.log('creating new user');
         users[userId] = {userId: socket.userId, games:{}};
-      } else {
-        console.log('user found!');
-        Object.keys(users[userId].games).forEach(function(gameId) {
-          console.log('gameid - ' + gameId);
-        });
-      }
+      } 
+      // uncomment when game resume is supported 
+      // else {
+      //   console.log('user found!');
+      //   Object.keys(users[userId].games).forEach(function(gameId) {
+      //     console.log('gameid - ' + gameId);
+      //   });
+      // }
       
       console.log('sending login message to client');
       socket.emit('login', {users: Object.keys(lobbyUsers), 
@@ -56,7 +58,16 @@ var activeGames = {};
       // so only white has game.id associated with socket
       socket.gameId = game.id;
       activeGames[game.id] = game;
-      
+
+      // added in debugging
+      console.log('ensuring both user game records are empty')
+      // console.log(typeof users[socket.userId].games);
+      users[game.users.white].games = {};
+      console.log(users[game.users.white].games);
+      users[game.users.black].games = {};
+      console.log(users[game.users.black].games);
+      console.log('done emptying');
+
       users[game.users.white].games[game.id] = game.id;
       users[game.users.black].games[game.id] = game.id;
 
@@ -160,12 +171,6 @@ var activeGames = {};
       
       delete lobbyUsers[socket.userId];
       
-      // new in debugging
-      console.log('emptying user game record')
-      // console.log(typeof users[socket.userId].games);
-      users[socket.userId].games = {};
-
-
       console.log('logging out ' + socket.userId);
       // console.log('ending game: ' + socket.gameId);
       console.log('ending game: ' + gameToBeDisconnected);
@@ -183,6 +188,13 @@ var activeGames = {};
         // gameId: socket.gameId
         gameId: gameToBeDisconnected
       });
+
+      // new in debugging
+      console.log('emptying user game record')
+      // console.log(typeof users[socket.userId].games);
+      users[socket.userId].games = {};
+      console.log(users[socket.userId].games);
+      console.log('done emptying');
     });
 
     // for chat functionality in gameroom games
