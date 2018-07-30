@@ -21,6 +21,12 @@ var UserSchema = new Schema({
     },
   phonenum: {
         type: String,
+        validate: {
+            validator: function(input) {
+                /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(input);
+            },
+            message: "Use 10 digits in format shown"
+        }
   }
 });
 

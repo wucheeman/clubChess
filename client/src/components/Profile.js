@@ -76,7 +76,8 @@ onSubmit = (e) => {
             <label htmlFor="inputName" className='profileLabel pt-3' >Name</label>
             <input type="text" className="form-control" placeholder="Jane Doe" name="name" value={name} onChange={this.onChange}/>
             <label htmlFor="inputPhonenum" className='profileLabel pt-3'>Phone Number</label>
-            <input type="text" className="form-control" placeholder="123-1234" name="phonenum" value={phonenum} onChange={this.onChange} />
+            <input type="text" className="form-control" placeholder="987-123-1234" name="phonenum" value={phonenum} onChange={this.onChange} />
+            <small id="phoneNumHelp" class="form-text text-muted">Please use 10 digits with dashes as shown</small>
             <label htmlFor="inputStatus" className='profileLabel pt-3'>Status</label>
             <input type="text" className="form-control" placeholder="On-line" name="status" value={status} onChange={this.onChange} />
             <br />

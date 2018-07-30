@@ -23,10 +23,14 @@ router.get('/', passport.authenticate('jwt', { session: false}), function(req, r
 router.post('/profile', function(req, res) {
   console.log(req.body);
   const updateObj = {};
+
+  const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   if (req.body.name !== '') {
     updateObj.name = req.body.name;
   }
-  if (req.body.phonenum !== '') {
+    // TODO: remove when better validation is in place
+  if (req.body.phonenum !== '' && phoneRegex.test(req.body.phonenum)) {
+    console.log(phoneRegex.test(req.body.phonenum));
     updateObj.phonenum = req.body.phonenum;
   }
   if (req.body.status !== '') {

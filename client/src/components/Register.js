@@ -27,6 +27,12 @@ class Create extends Component {
     axios.post('/api/auth/register', { username, password })
       .then((result) => {
         this.props.history.push("/login")
+      })
+      .catch((error) => {
+        // if(error.response.status === 401) {
+        //   this.setState({ message: 'Login failed. Username or password not match' });
+        // }
+        console.log(error);
       });
   }
 
