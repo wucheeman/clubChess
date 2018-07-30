@@ -52,6 +52,8 @@ var activeGames = {};
           users: {white: socket.userId, black: opponentId}
       };
       
+      // invitation comes in on white's socket
+      // so only white has game.id associated with socket
       socket.gameId = game.id;
       activeGames[game.id] = game;
       
@@ -133,18 +135,53 @@ var activeGames = {};
     socket.on('disconnect', function(msg){
       console.log('user disconnected');
 
-      console.log(msg); 
+      // console.log(msg); 
 
-      if (socket && socket.userId && socket.gameId) {
+      console.log(users[socket.userId]);
+      console.log(users[socket.userId].games);
+      console.log(Object.keys(users[socket.userId].games));
+      let gameIdProp = Object.keys(users[socket.userId].games);
+      console.log(users[socket.userId].games[gameIdProp]);
+
+      // probably don't need this logic; determine during refactoring
+      let gameToBeDisconnected;
+      if (socket.gameId) {
+        gameToBeDisconnected = socket.gameId;
+      } else {
+        gameToBeDisconnected = users[socket.userId].games[gameIdProp];
+      }
+
+      // if (socket && socket.userId && socket.gameId) {
+      if (socket && socket.userId && gameToBeDisconnected) {
         console.log(socket.userId + ' disconnected');
-        console.log(socket.gameId + ' disconnected');
+        // console.log(socket.gameId + ' disconnected');
+        console.log(gameToBeDisconnected + ' disconnected');
       }
       
       delete lobbyUsers[socket.userId];
       
+      // new in debugging
+      console.log('emptying user game record')
+      // console.log(typeof users[socket.userId].games);
+      users[socket.userId].games = {};
+
+
+      console.log('logging out ' + socket.userId);
+      // console.log('ending game: ' + socket.gameId);
+      console.log('ending game: ' + gameToBeDisconnected);
+      
+      // TODO: delete all these?
+      // console.log(users[socket.userId]);
+      // console.log(users[socket.userId].games);
+      // console.log(Object.keys(users[socket.userId].games));
+      // let gameIdProp = Object.keys(users[socket.userId].games);
+      // console.log(users[socket.userId].games[gameIdProp]);
+      // console.log(users[socket.userId].games.game.id);
+      // console.log(activeGames);
       socket.broadcast.emit('logout', {
         userId: socket.userId,
-        gameId: socket.gameId
+        // gameId: socket.gameId
+        gameId: gameToBeDisconnected
       });
     });
 

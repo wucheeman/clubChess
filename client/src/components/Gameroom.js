@@ -82,6 +82,7 @@ export default class Gameroom extends React.Component {
       console.log('in startGame');
       this.setState({playerColor: data.color});
       console.log(this.state.playerColor);
+      console.log(data.game);
       this.initGame(data.game);
     }
 
@@ -95,7 +96,7 @@ export default class Gameroom extends React.Component {
       let position;
       console.log('in updateGame')
       console.log(data);
-      if (this.state.serverGame && data.gameId ===   this.state.serverGame.id) {
+      if (this.state.serverGame && data.gameId ===   this.state.serverGame) {
         this.state.game.move(data.move);
         position = this.state.game.fen()
         this.setState({ position: position });
@@ -108,7 +109,11 @@ export default class Gameroom extends React.Component {
     });
 
     const handleResign = (data) => {
-      if (data.gameId == this.state.serverGame.id) {
+      console.log('in handleResign');
+      console.log(data.gameId);
+      console.log('game to end: ' + this.state.serverGame);
+
+      if (data.gameId === this.state.serverGame) {
         this.setState(
           {
             opponentID: '',
@@ -125,6 +130,8 @@ export default class Gameroom extends React.Component {
         );
         this.toggleVisibilty();
         this.socket.emit('login', this.state.username);
+
+        // TODO: delete?
         // this.toggleVisibilty();
       }
     }
@@ -139,12 +146,11 @@ export default class Gameroom extends React.Component {
       console.log(msg);
       removeUser(msg.userId);
 
-      // handle when user disconnected
+      // handle when user disconnected or reloaded
       if (msg.gameId) {
-        console.log(msg.gameId);
+        console.log('About to call handleResign with gameId: ' + msg.gameId);
         handleResign(msg);
       }
-      // for case when user reloaded during game
 
     });
 
@@ -198,11 +204,12 @@ export default class Gameroom extends React.Component {
       });
   }
 
-  initGame(serverGameState) {
+  initGame(serverGameObj) {
     console.log('in initGame');
+    console.log(serverGameObj)
     // must be here, or DOM is not correctly updated after visibility toggled
     this.toggleVisibilty();
-    this.setState({serverGame: serverGameState});
+    this.setState({serverGame: serverGameObj.id});
     console.log(this.state.serverGame);
 
     this.setState({position: 'start'});
@@ -249,7 +256,8 @@ export default class Gameroom extends React.Component {
     console.log(this.state.position);
     this.socket.emit('move', 
                      {move: move,
-                      gameId: this.state.serverGame.id,
+                      // gameId: this.state.serverGame.id,
+                      gameId: this.state.serverGame,
                       position: position});
   };
 
@@ -265,7 +273,8 @@ export default class Gameroom extends React.Component {
   handleOverClick() {
     console.log('handling game over click');
     // not DRY with handleResign!
-    this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame.id});
+    // this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame.id});
+    this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame});
     this.setState(
       {
         opponentID: '',
@@ -286,12 +295,12 @@ export default class Gameroom extends React.Component {
   }
 
   handleInGameLogOut() {
-    console.log('handling game lock out ');
-    let chatMessage = this.state.username + this.state.serverGame.id;
+    console.log('handling game log out ');
+    console.log(`username: ${this.state.username}; serverGame.id: ${this.state.serverGame}`);
+    let chatMessage = `username: ${this.state.username}; serverGame.id: ${this.state.serverGame}`;
     this.socket.emit('chat message', chatMessage);
-    // this.socket.emit('chat message' `${this.state.username}, ${this.state.serverGame.id}`)
     // not DRY with handleResign!
-    this.socket.emit('disconnect', {userId: this.state.username, gameId: this.state.serverGame.id});
+    this.socket.emit('disconnect', {userId: this.state.username, gameId: this.state.serverGame});
     // resetting state, just to be sure; TODO: refactor
     this.setState(
       {
