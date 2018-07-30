@@ -11,6 +11,7 @@ import Gameroom from "./components/Gameroom";
 // import Game from "./components/Game";
 import Directory from "./components/Directory";
 import Profile from './components/Profile';
+import NoMatch from './components/NoMatch';
 
 // import NoMatch from "./components/NoMatch";
 // TODO: does this do anything I need?
@@ -31,9 +32,9 @@ const App = () => (
           <Route exact path="/profile" component={Profile} />
           {/* This will be used for human v computer if implemented */}
           {/* <Route exact path="/game" component={Game} /> */}
-          {/* <Route exact path="/home" component={Home} />
-          <Route exact path="/saved" component={Saved} />
-          <Route component={NoMatch} /> */}
+          {/* <Route exact path="/home" component={Home} /> */}
+          {/* <Route exact path="/saved" component={Saved} /> */}
+          <Route component={NoMatch} /> */
         </Switch>
       {/* </Wrapper> */}
     </div>
