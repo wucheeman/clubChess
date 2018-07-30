@@ -21,12 +21,14 @@ var activeGames = {};
       if (!users[userId]) {
         console.log('creating new user');
         users[userId] = {userId: socket.userId, games:{}};
-      } else {
-        console.log('user found!');
-        Object.keys(users[userId].games).forEach(function(gameId) {
-          console.log('gameid - ' + gameId);
-        });
-      }
+      } 
+      // uncomment when game resume is supported 
+      // else {
+      //   console.log('user found!');
+      //   Object.keys(users[userId].games).forEach(function(gameId) {
+      //     console.log('gameid - ' + gameId);
+      //   });
+      // }
       
       console.log('sending login message to client');
       socket.emit('login', {users: Object.keys(lobbyUsers), 
@@ -52,9 +54,20 @@ var activeGames = {};
           users: {white: socket.userId, black: opponentId}
       };
       
+      // invitation comes in on white's socket
+      // so only white has game.id associated with socket
       socket.gameId = game.id;
       activeGames[game.id] = game;
-      
+
+      // added in debugging
+      console.log('ensuring both user game records are empty')
+      // console.log(typeof users[socket.userId].games);
+      users[game.users.white].games = {};
+      console.log(users[game.users.white].games);
+      users[game.users.black].games = {};
+      console.log(users[game.users.black].games);
+      console.log('done emptying');
+
       users[game.users.white].games[game.id] = game.id;
       users[game.users.black].games[game.id] = game.id;
 
@@ -133,19 +146,55 @@ var activeGames = {};
     socket.on('disconnect', function(msg){
       console.log('user disconnected');
 
-      console.log(msg); 
+      // console.log(msg); 
 
-      if (socket && socket.userId && socket.gameId) {
+      console.log(users[socket.userId]);
+      console.log(users[socket.userId].games);
+      console.log(Object.keys(users[socket.userId].games));
+      let gameIdProp = Object.keys(users[socket.userId].games);
+      console.log(users[socket.userId].games[gameIdProp]);
+
+      // probably don't need this logic; determine during refactoring
+      let gameToBeDisconnected;
+      if (socket.gameId) {
+        gameToBeDisconnected = socket.gameId;
+      } else {
+        gameToBeDisconnected = users[socket.userId].games[gameIdProp];
+      }
+
+      // if (socket && socket.userId && socket.gameId) {
+      if (socket && socket.userId && gameToBeDisconnected) {
         console.log(socket.userId + ' disconnected');
-        console.log(socket.gameId + ' disconnected');
+        // console.log(socket.gameId + ' disconnected');
+        console.log(gameToBeDisconnected + ' disconnected');
       }
       
       delete lobbyUsers[socket.userId];
       
+      console.log('logging out ' + socket.userId);
+      // console.log('ending game: ' + socket.gameId);
+      console.log('ending game: ' + gameToBeDisconnected);
+      
+      // TODO: delete all these?
+      // console.log(users[socket.userId]);
+      // console.log(users[socket.userId].games);
+      // console.log(Object.keys(users[socket.userId].games));
+      // let gameIdProp = Object.keys(users[socket.userId].games);
+      // console.log(users[socket.userId].games[gameIdProp]);
+      // console.log(users[socket.userId].games.game.id);
+      // console.log(activeGames);
       socket.broadcast.emit('logout', {
         userId: socket.userId,
-        gameId: socket.gameId
+        // gameId: socket.gameId
+        gameId: gameToBeDisconnected
       });
+
+      // new in debugging
+      console.log('emptying user game record')
+      // console.log(typeof users[socket.userId].games);
+      users[socket.userId].games = {};
+      console.log(users[socket.userId].games);
+      console.log('done emptying');
     });
 
     // for chat functionality in gameroom games
