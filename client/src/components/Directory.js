@@ -20,7 +20,7 @@ class Directory extends Component {
       .then(res => {
         this.setState({username: sessionStorage.getItem('username')});
         this.setState({ users: res.data });
-        console.log(this.state.users);
+        // console.log(this.state.users);
       })
       .catch((error) => {
         if(error.response.status === 401) {
