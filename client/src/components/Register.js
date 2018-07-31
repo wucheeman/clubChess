@@ -48,6 +48,8 @@ class Create extends Component {
           <input type="email" class="form-control" placeholder="Email address" name="username" value={username} onChange={this.onChange} required/>
           <label for="inputPassword" class="sr-only">Password</label>
           <input type="password" class="form-control" placeholder="Password" name="password" value={password} onChange={this.onChange} required/>
+          <small id="passwordHelp" class="form-text text-muted">Please use at least 8 characters with 1 numeral</small>
+          <br />
           <button class="btn btn-primary btn-block" type="submit">Register</button>
         </form>
       </div>

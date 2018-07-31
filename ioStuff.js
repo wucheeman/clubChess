@@ -146,13 +146,18 @@ var activeGames = {};
     socket.on('disconnect', function(msg){
       console.log('user disconnected');
 
+      // protects against unauthorized user attempting access repeatedly
+      if (socket.userId === undefined) {
+        console.log('undefined user!');
+        return;
+      }
       // console.log(msg); 
 
-      console.log(users[socket.userId]);
-      console.log(users[socket.userId].games);
-      console.log(Object.keys(users[socket.userId].games));
+      // console.log(users[socket.userId]);
+      // console.log(users[socket.userId].games);
+      // console.log(Object.keys(users[socket.userId].games));
       let gameIdProp = Object.keys(users[socket.userId].games);
-      console.log(users[socket.userId].games[gameIdProp]);
+      // console.log(users[socket.userId].games[gameIdProp]);
 
       // probably don't need this logic; determine during refactoring
       let gameToBeDisconnected;
