@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-// import ReactDOM from 'react-dom';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
 import './Login.css';
 
 class Create extends Component {
@@ -29,9 +27,6 @@ class Create extends Component {
         this.props.history.push("/login")
       })
       .catch((error) => {
-        // if(error.response.status === 401) {
-        //   this.setState({ message: 'Login failed. Username or password not match' });
-        // }
         console.log(error);
       });
   }
