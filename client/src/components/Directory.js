@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
@@ -17,8 +16,6 @@ class Directory extends Component {
 
   componentDidMount() {
     axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtToken');
-    //console.log(localStorage.getItem('username'));
-    //console.log('in componentDidMount');
     axios.get('/api/user')
       .then(res => {
         this.setState({username: sessionStorage.getItem('username')});
@@ -31,12 +28,6 @@ class Directory extends Component {
         }
       });
   }
-
-  //TODO: delete during cleanup
-  // logout = () => {
-  //   sessionStorage.removeItem('jwtToken');
-  //   window.location.reload();
-  // }
 
   render() {
     return (
@@ -53,19 +44,11 @@ class Directory extends Component {
         </nav>
       </div>
 
-      {/* <div className="container"> */}
         <div className="panel panel-default">
           <div className="panel-heading">
             <h2 className="panel-title pb-1">
               Club Directory &nbsp;
-              {/* TODO: delete during cleanup; get the &nbsp */}
-              {/* {sessionStorage.getItem('jwtToken') && */}
-                {/* <button className="btn btn-primary" onClick={this.logout}>Logout</button> */}
-              {/* } */}
             </h2>
-            {/* <h6>
-              Welcome to {sessionStorage.getItem('username')}!
-            </h6> */}
           </div>
           <div className="panel-body">
             <table className="table border-bottom">
@@ -80,7 +63,6 @@ class Directory extends Component {
               <tbody>
                 {this.state.users.map(user =>
                   <tr>
-                                    {/* <tr scope="row"> */}
                     <td>{user.status}</td>
                     <td>{user.name}</td>
                     <td>{user.username}</td>
@@ -89,7 +71,6 @@ class Directory extends Component {
                 )}
               </tbody>
             </table>
-            {/* <hr className='mt-0' /> */}
 
             <button className="btn btn-primary">
                   <Link className='directoryUpdate text-white' to="/profile">
@@ -100,7 +81,6 @@ class Directory extends Component {
           </div>
         </div>
 
-      {/* </div> */}
       </div>
       </Wrapper>
     );
@@ -108,34 +88,3 @@ class Directory extends Component {
 }
 
 export default Directory;
-
-
-
-
-
-
-
-
-
-// Default code
-// import React, { Component } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h1 className="App-title">Welcome to React</h1>
-//         </header>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
-
-// export default App;

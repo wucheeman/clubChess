@@ -1,10 +1,7 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 import io from "socket.io-client";
 import Chess from 'chess.js';
 import Chessboard from "chessboardjsx";
-// TODO: delete this and file
-// import HumanVsHuman from "./integrations/HumanVsHuman";
 import axios from 'axios';
 import './Chat.css';
 import Wrapper from './Wrapper';
@@ -38,7 +35,6 @@ export default class Gameroom extends React.Component {
     this.socket.on('login', function(data){
       console.log('client sez: server has processed login');
       completeLogin(data);
-      // updateUsersList();
     });
 
     const completeLogin = data => {
@@ -54,7 +50,7 @@ export default class Gameroom extends React.Component {
       this.socket.emit('invite', oppenentId);
     }
 
-    // updates list of uses in game room waiting to play
+    // updates list of users in game room waiting to play
     this.socket.on('joinlobby', function(newUser) {
       console.log(`${newUser} is joining the gameroom`);
       addUser(newUser);
@@ -67,8 +63,6 @@ export default class Gameroom extends React.Component {
       console.log(`before adding, usersOnline is ${usersOnline}`)
       usersOnline.push(newUser);
       console.log(`after adding, usersOnline is ${usersOnline}`)
-      // this.setState([...this.state.usersOnline, newUser]);
-      // const usersOnline = this.state.usersOnline.push(newUser)
       this.setState({usersOnline: usersOnline});
       console.log(`usersOnline now are ${this.state.usersOnline}`);
     }
@@ -131,8 +125,6 @@ export default class Gameroom extends React.Component {
         this.toggleVisibilty();
         this.socket.emit('login', this.state.username);
 
-        // TODO: delete?
-        // this.toggleVisibilty();
       }
     }
 
@@ -176,7 +168,6 @@ export default class Gameroom extends React.Component {
       console.log('in updateChatText');
       let chatText = [...this.state.chatText];
       chatText.push(data);
-      // chatText.unshift(data);
       this.setState({chatText: chatText});
       console.log(`chatText now is ${this.state.chatText}`);
     }
@@ -185,17 +176,13 @@ export default class Gameroom extends React.Component {
   } // end of constructor
 
   componentDidMount() {
-    // this.state.username = sessionStorage.getItem('username');
-    // this.login();
     axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtToken');
-    //console.log(localStorage.getItem('username'));
-    //console.log('in componentDidMount');
     axios.get('/api/user')
       .then(res => {
         this.setState({username: sessionStorage.getItem('username')});
         this.setState({ users: res.data });
         console.log(this.state.users);
-        this.login(); // only addition to code copied from Lobby
+        this.login();
       })
       .catch((error) => {
         if(error.response.status === 401) {
@@ -203,15 +190,6 @@ export default class Gameroom extends React.Component {
         }
       });
   }
-
-  ///////////// TEST SECTION ////////////////////
-
-
-
-
-
-
-  ///////////// END TEST SECTION ////////////////////////
 
   initGame(serverGameObj) {
     console.log('in initGame');
@@ -223,29 +201,23 @@ export default class Gameroom extends React.Component {
 
     this.setState({position: 'start'});
     this.setState({orientation: this.state.playerColor});
-    // const newGame = new Chess();
-        // this.setState({game: newGame});
     this.setState({game: new Chess()});
-    // this.toggleVisibilty();
 
   }
 
   onDrop = (source, target) => {
-    // this.removeHighlightSquare();
     console.log('in onDrop');
 
     // prevent move if game over or wrong player
     console.log('playerColor is: ' + this.state.playerColor)
     console.log('the turn is: ' + this.state.game.turn());
     console.log('the position is: '  + this.state.position);
-    // TODO: move this so it triggers when game is over and it's announced in UI
+
     if (this.state.game.game_over() === true) {
       console.log('GAME OVER!!!');
       return;
     }
-    // don't think these are needed
-    // (this.state.game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-    // (this.state.game.turn() === 'b' && piece.search(/^w/) !== -1) ||
+
     if (this.state.game.turn() !== this.state.playerColor[0]) return;
 
     // see if the move is legal
@@ -261,7 +233,6 @@ export default class Gameroom extends React.Component {
     console.log(this.state.game.fen);
     let position = this.state.game.fen()
     this.setState({ position: position });
-    // console.log('getting this.state.position');
     console.log(this.state.position);
     this.socket.emit('move', 
                      {move: move,
@@ -282,7 +253,6 @@ export default class Gameroom extends React.Component {
   handleOverClick() {
     console.log('handling game over click');
     // not DRY with handleResign!
-    // this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame.id});
     this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame});
     this.setState(
       {
@@ -310,7 +280,6 @@ export default class Gameroom extends React.Component {
     this.socket.emit('chat message', chatMessage);
     // not DRY with handleResign!
     this.socket.emit('disconnect', {userId: this.state.username, gameId: this.state.serverGame});
-    // resetting state, just to be sure; TODO: refactor
     this.setState(
       {
         opponentID: '',
@@ -327,9 +296,6 @@ export default class Gameroom extends React.Component {
     );
     sessionStorage.removeItem('jwtToken');
     window.location.href = "/";
-    // console.log('in handleOverClick, about to emit login');
-    // this.socket.emit('login', this.state.username);
-    // this.toggleVisibilty();
   }
 
 
@@ -344,9 +310,7 @@ export default class Gameroom extends React.Component {
     // TODO: refactor; not DRY with updateChatText
     let chatText = [...this.state.chatText];
     chatText.push(chatMessage);
-    // chatText.unshift(chatMessage);
     this.setState({chatText: chatText});
-    // this clears form and keeps it from reloading the page
     const messageForm = document.getElementsByName('chatForm')[0];
     messageForm.reset();
 
@@ -404,11 +368,6 @@ export default class Gameroom extends React.Component {
               <div className="page gameroom" id='page-gameroom'>
                   <h2>Game Room</h2>
                     <h6 id='userLabel'>Enjoy your game, {this.state.username}!</h6>
-                    {/* <h3>Active games</h3>
-                    <div id='gamesList'>
-                      No active games
-                    </div>
-                    <Link to="/game">Game On!</Link> */}
                     <br />
                     <h4 className='pb-1'>Online players</h4>
                       <div id='userList'>
@@ -418,9 +377,6 @@ export default class Gameroom extends React.Component {
                           </div>
                         )}
                       </div>
-                      {/* TODO: Delete these in cleanup */}
-                    {/* <Link to="/">Back to Lobby</Link> */}
-                    {/* <button id='returnToLobby' className='btn btn-primary' onClick={() => this.handleLobbyClick()}>Back to Lobby</button> */}
               </div>
 
             </div>
@@ -508,7 +464,3 @@ const boardsContainer = {
   justifyContent: "center",
   alignItems: "center"
 };
-// const boardStyle = {
-//   borderRadius: "5px",
-//   boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
-// };
