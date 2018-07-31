@@ -27,9 +27,9 @@ class Login extends Component {
     axios.post('/api/auth/login', { username, password })
       .then((result) => {
         sessionStorage.setItem('jwtToken', result.data.token);
-        console.log(sessionStorage.getItem('jwtToken'));
+        // console.log(sessionStorage.getItem('jwtToken'));
         sessionStorage.setItem('username', username);
-        console.log(sessionStorage.getItem('username'));
+        // console.log(sessionStorage.getItem('username'));
         this.setState({ message: '' });
         this.props.history.push('/')
       })
