@@ -204,6 +204,15 @@ export default class Gameroom extends React.Component {
       });
   }
 
+  ///////////// TEST SECTION ////////////////////
+
+
+
+
+
+
+  ///////////// END TEST SECTION ////////////////////////
+
   initGame(serverGameObj) {
     console.log('in initGame');
     console.log(serverGameObj)
