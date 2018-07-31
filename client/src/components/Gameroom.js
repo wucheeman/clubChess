@@ -11,7 +11,7 @@ export default class Gameroom extends React.Component {
 
   constructor(props){
     super(props);
-
+    console.log('props', props)
     this.state = {
         username: '',
         usersOnline: [],
@@ -438,7 +438,7 @@ export default class Gameroom extends React.Component {
                       <input type='form-control-plaintext' id="m" className='chatMsg w-100' />
                     </div>
                     <div className='col-sm-3'>
-                      <button className='pl-5' id="button" type="submit" value="send" className="btn btn-primary btn-sm">Submit</button>
+                      <button id="button" type="submit" value="send" className="pl-5 btn btn-primary btn-sm">Submit</button>
                     </div>
                     {/* <div className='col-sm-1'></div> */}
                   </form>
