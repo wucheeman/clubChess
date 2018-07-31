@@ -38,12 +38,12 @@ class Profile extends Component {
 
 onSubmit = (e) => {
   e.preventDefault();
-  console.log('in onSubmit');
+  // console.log('in onSubmit');
   const { username, name, phonenum, status } = this.state;
-  console.log(username, name, phonenum, status);
+  // console.log(username, name, phonenum, status);
   axios.post('/api/user/profile', { username, name, phonenum, status })
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       window.location.href="/directory";
     });
   }
