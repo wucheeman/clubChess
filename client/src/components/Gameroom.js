@@ -33,63 +33,63 @@ export default class Gameroom extends React.Component {
     }
 
     this.socket.on('login', function(data){
-      console.log('client sez: server has processed login');
+      //console.log('client sez: server has processed login');
       completeLogin(data);
     });
 
     const completeLogin = data => {
-      console.log(data);
+      //console.log(data);
       this.setState({usersOnline: data.users});
-      console.log('done handling login');
-      console.log(this.state.usersOnline);
+      //console.log('done handling login');
+      //console.log(this.state.usersOnline);
     }
 
     this.handleInviteClick = (ev) => {
       const oppenentId = ev.target.value
-      console.log('got an invitation to play for ' + oppenentId);
+      //console.log('got an invitation to play for ' + oppenentId);
       this.socket.emit('invite', oppenentId);
     }
 
     // updates list of users in game room waiting to play
     this.socket.on('joinlobby', function(newUser) {
-      console.log(`${newUser} is joining the gameroom`);
+      //console.log(`${newUser} is joining the gameroom`);
       addUser(newUser);
     });
 
     const addUser = newUser => {
-      console.log(`adding ${newUser} to usersOnline`);
+      //console.log(`adding ${newUser} to usersOnline`);
       // make a copy of array
       let usersOnline = [...this.state.usersOnline];
-      console.log(`before adding, usersOnline is ${usersOnline}`)
+      //console.log(`before adding, usersOnline is ${usersOnline}`)
       usersOnline.push(newUser);
-      console.log(`after adding, usersOnline is ${usersOnline}`)
+      // console.log(`after adding, usersOnline is ${usersOnline}`)
       this.setState({usersOnline: usersOnline});
-      console.log(`usersOnline now are ${this.state.usersOnline}`);
+      // console.log(`usersOnline now are ${this.state.usersOnline}`);
     }
 
     this.socket.on('joingame', function(data) {
-      console.log(`got joingame message`);
+      // console.log(`got joingame message`);
       startGame(data);
     });
 
     const startGame = (data) => {
-      console.log('in startGame');
+      // console.log('in startGame');
       this.setState({playerColor: data.color});
-      console.log(this.state.playerColor);
-      console.log(data.game);
+      // console.log(this.state.playerColor);
+      // console.log(data.game);
       this.initGame(data.game);
     }
 
     // this updates chess.js and chessboard.js
     this.socket.on('move', function (msg) {
-      console.log('got move broadcast');
+      // console.log('got move broadcast');
       updateGame(msg);
     });
 
     const updateGame = (data) => {
       let position;
-      console.log('in updateGame')
-      console.log(data);
+      // console.log('in updateGame')
+      // console.log(data);
       if (this.state.serverGame && data.gameId ===   this.state.serverGame) {
         this.state.game.move(data.move);
         position = this.state.game.fen()
@@ -98,14 +98,14 @@ export default class Gameroom extends React.Component {
     }
 
     this.socket.on('resign', function(msg) {
-      console.log('got resign broadcast');
+      // console.log('got resign broadcast');
       handleResign(msg);
     });
 
     const handleResign = (data) => {
-      console.log('in handleResign');
-      console.log(data.gameId);
-      console.log('game to end: ' + this.state.serverGame);
+      // console.log('in handleResign');
+      // console.log(data.gameId);
+      // console.log('game to end: ' + this.state.serverGame);
 
       if (data.gameId === this.state.serverGame) {
         this.setState(
@@ -129,47 +129,47 @@ export default class Gameroom extends React.Component {
     }
 
     this.socket.on('leavelobby', function (msg) {
-      console.log(msg + ' is leaving the gameroom');
+      // console.log(msg + ' is leaving the gameroom');
       removeUser(msg);
     });
 
     this.socket.on('logout', function (msg) {
-      console.log('got user logout message re:');
-      console.log(msg);
+      // console.log('got user logout message re:');
+      // console.log(msg);
       removeUser(msg.userId);
 
       // handle when user disconnected or reloaded
       if (msg.gameId) {
-        console.log('About to call handleResign with gameId: ' + msg.gameId);
+        // console.log('About to call handleResign with gameId: ' + msg.gameId);
         handleResign(msg);
       }
 
     });
 
     const removeUser = (userId) => {
-      console.log('in removeUser for ' + userId);
+      // console.log('in removeUser for ' + userId);
       // make a copy of array
       let usersOnline = [...this.state.usersOnline];
-      console.log(`before removal, usersOnline is ${usersOnline}`)
+      // console.log(`before removal, usersOnline is ${usersOnline}`)
       const remainingUsers = usersOnline.filter(user => user !== userId);
-      console.log(`after removal, usersOnline is ${remainingUsers}`)
+      // console.log(`after removal, usersOnline is ${remainingUsers}`)
       this.setState({usersOnline: remainingUsers});
-      console.log(`usersOnline now are ${this.state.usersOnline}`);
+      // console.log(`usersOnline now are ${this.state.usersOnline}`);
 
     };
 
     this.socket.on('chat message', function(msg){
-      console.log('just got this message:');
-      console.log(msg);
+      // console.log('just got this message:');
+      // console.log(msg);
       updateChatText(msg);
     });
 
     const updateChatText = (data) => {
-      console.log('in updateChatText');
+      // console.log('in updateChatText');
       let chatText = [...this.state.chatText];
       chatText.push(data);
       this.setState({chatText: chatText});
-      console.log(`chatText now is ${this.state.chatText}`);
+      // console.log(`chatText now is ${this.state.chatText}`);
     }
 
 
@@ -181,7 +181,7 @@ export default class Gameroom extends React.Component {
       .then(res => {
         this.setState({username: sessionStorage.getItem('username')});
         this.setState({ users: res.data });
-        console.log(this.state.users);
+        // console.log(this.state.users);
         this.login();
       })
       .catch((error) => {
@@ -192,12 +192,12 @@ export default class Gameroom extends React.Component {
   }
 
   initGame(serverGameObj) {
-    console.log('in initGame');
-    console.log(serverGameObj)
+    // console.log('in initGame');
+    // console.log(serverGameObj)
     // must be here, or DOM is not correctly updated after visibility toggled
     this.toggleVisibilty();
     this.setState({serverGame: serverGameObj.id});
-    console.log(this.state.serverGame);
+    // console.log(this.state.serverGame);
 
     this.setState({position: 'start'});
     this.setState({orientation: this.state.playerColor});
@@ -206,15 +206,15 @@ export default class Gameroom extends React.Component {
   }
 
   onDrop = (source, target) => {
-    console.log('in onDrop');
+    // console.log('in onDrop');
 
     // prevent move if game over or wrong player
-    console.log('playerColor is: ' + this.state.playerColor)
-    console.log('the turn is: ' + this.state.game.turn());
-    console.log('the position is: '  + this.state.position);
+    // console.log('playerColor is: ' + this.state.playerColor)
+    // console.log('the turn is: ' + this.state.game.turn());
+    // console.log('the position is: '  + this.state.position);
 
     if (this.state.game.game_over() === true) {
-      console.log('GAME OVER!!!');
+      // console.log('GAME OVER!!!');
       return;
     }
 
@@ -230,10 +230,10 @@ export default class Gameroom extends React.Component {
     // illegal move
     if (move === null) return;
 
-    console.log(this.state.game.fen);
+    // console.log(this.state.game.fen);
     let position = this.state.game.fen()
     this.setState({ position: position });
-    console.log(this.state.position);
+    // console.log(this.state.position);
     this.socket.emit('move', 
                      {move: move,
                       // gameId: this.state.serverGame.id,
@@ -244,14 +244,14 @@ export default class Gameroom extends React.Component {
   // this moves elements in and out of DOM, so be careful about 
   // where you place calls to it relative to updates to state
   toggleVisibilty() {
-    console.log("toggling visibility of game and gameroom!");
+    // console.log("toggling visibility of game and gameroom!");
     this.setState({gameroomVisibility: !this.state.gameroomVisibility,
                    gameVisibility: !this.state.gameVisibility})
   }
 
 
   handleOverClick() {
-    console.log('handling game over click');
+    // console.log('handling game over click');
     // not DRY with handleResign!
     this.socket.emit('resign', {userId: this.state.username, gameId: this.state.serverGame});
     this.setState(
@@ -268,13 +268,13 @@ export default class Gameroom extends React.Component {
         chatText: []
       },
     );
-    console.log('in handleOverClick, about to emit login');
+    // console.log('in handleOverClick, about to emit login');
     this.socket.emit('login', this.state.username);
     this.toggleVisibilty();
   }
 
   handleInGameLogOut() {
-    console.log('handling game log out ');
+    // console.log('handling game log out ');
     console.log(`username: ${this.state.username}; serverGame.id: ${this.state.serverGame}`);
     let chatMessage = `username: ${this.state.username}; serverGame.id: ${this.state.serverGame}`;
     this.socket.emit('chat message', chatMessage);
@@ -301,10 +301,10 @@ export default class Gameroom extends React.Component {
 
   handleChatClick(event) {
     event.preventDefault();
-    console.log('got here');
+    // console.log('got here');
     let chatMessage = document.getElementById('m').value;
-    console.log('sending this message:');
-    console.log(chatMessage);
+    // console.log('sending this message:');
+    // console.log(chatMessage);
     chatMessage = `${this.state.username}: ${chatMessage}`;
     this.socket.emit('chat message', chatMessage);
     // TODO: refactor; not DRY with updateChatText
@@ -318,7 +318,7 @@ export default class Gameroom extends React.Component {
   }
 
   handleLobbyClick() {
-    console.log( this.state.username + ' is going back to lobby');
+    // console.log( this.state.username + ' is going back to lobby');
     this.socket.emit('leave-room', this.state.username);
     window.location.href = "/";
   }
