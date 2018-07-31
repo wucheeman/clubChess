@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import io from "socket.io-client";
 import Chess from 'chess.js';
 import Chessboard from "chessboardjsx";
@@ -392,10 +392,11 @@ export default class Gameroom extends React.Component {
 
               <div>
                 <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb pl-0">
-                    <li class="breadcrumb-item"><a href="#" onClick={() => this.handleLobbyClick()}>Lobby</a></li>
+                  <ol className="breadcrumb pl-0">
+                  {/* href was to '#' */}
+                    <li className="breadcrumb-item"><a href="/" onClick={() => this.handleLobbyClick()}>Lobby</a></li>
                     {/* <li class="breadcrumb-item"><Link to="/">Back to Lobby</Link></li> */}
-                    <li class="breadcrumb-item active" aria-current="page">Game Room</li>
+                    <li className="breadcrumb-item active" aria-current="page">Game Room</li>
                   </ol>
                 </nav>
               </div>
@@ -481,7 +482,7 @@ export default class Gameroom extends React.Component {
                       <input type='form-control-plaintext' id="m" className='chatMsg w-100' />
                     </div>
                     <div className='col-sm-3'>
-                      <button className='pl-5' id="button" type="submit" value="send" class="btn btn-primary btn-sm">Submit</button>
+                      <button className='pl-5' id="button" type="submit" value="send" className="btn btn-primary btn-sm">Submit</button>
                     </div>
                     {/* <div className='col-sm-1'></div> */}
                   </form>
@@ -507,7 +508,7 @@ const boardsContainer = {
   justifyContent: "center",
   alignItems: "center"
 };
-const boardStyle = {
-  borderRadius: "5px",
-  boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
-};
+// const boardStyle = {
+//   borderRadius: "5px",
+//   boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
+// };

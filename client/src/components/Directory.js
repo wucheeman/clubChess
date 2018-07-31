@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
@@ -46,9 +46,9 @@ class Directory extends Component {
 
       <div>
         <nav aria-label="breadcrumb">
-          <ol class="breadcrumb pl-0">
-            <li class="breadcrumb-item"><a href="/">Lobby</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Directory</li>
+          <ol className="breadcrumb pl-0">
+            <li className="breadcrumb-item"><a href="/">Lobby</a></li>
+            <li className="breadcrumb-item active" aria-current="page">Directory</li>
           </ol>
         </nav>
       </div>
@@ -79,7 +79,8 @@ class Directory extends Component {
               </thead>
               <tbody>
                 {this.state.users.map(user =>
-                  <tr scope="row">
+                  <tr>
+                                    {/* <tr scope="row"> */}
                     <td>{user.status}</td>
                     <td>{user.name}</td>
                     <td>{user.username}</td>

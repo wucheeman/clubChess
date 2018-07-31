@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './Login.css';
 
 class Create extends Component {
@@ -39,18 +39,18 @@ class Create extends Component {
   render() {
     const { username, password } = this.state;
     return (
-      <div class="container">
-        <form class="form-signin" onSubmit={this.onSubmit}>
+      <div className="container">
+        <form className="form-signin" onSubmit={this.onSubmit}>
         <img className='logInKnight' src={require('./../img/navbarKnight.png')} alt="chess piece" />
         <h3 className='pageTitle'>Club Chess</h3>
-          <h2 class="form-signin-heading">Register</h2>
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" class="form-control" placeholder="Email address" name="username" value={username} onChange={this.onChange} required/>
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" class="form-control" placeholder="Password" name="password" value={password} onChange={this.onChange} required/>
-          <small id="passwordHelp" class="form-text text-muted">Please use at least 8 characters with 1 numeral</small>
+          <h2 className="form-signin-heading">Register</h2>
+          <label htmlFor="inputEmail" className="sr-only">Email address</label>
+          <input type="email" className="form-control" placeholder="Email address" name="username" value={username} onChange={this.onChange} required/>
+          <label htmlFor="inputPassword" className="sr-only">Password</label>
+          <input type="password" className="form-control" placeholder="Password" name="password" value={password} onChange={this.onChange} required/>
+          <small id="passwordHelp" className="form-text text-muted">Please use at least 8 characters with 1 numeral</small>
           <br />
-          <button class="btn btn-primary btn-block" type="submit">Register</button>
+          <button className="btn btn-primary btn-block" type="submit">Register</button>
         </form>
       </div>
     );
