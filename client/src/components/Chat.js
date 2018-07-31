@@ -11,16 +11,12 @@ class Chat extends Component {
       username: ''
     };
 
-    // don't know if this needed
     this.socket = io.connect();
 
     this.socket.on('chat message', function(msg){
       console.log(msg);
-      // $('#messages').append($('<li>').text(msg));
     });
-
-
-    
+   
   }
 
   componentDidMount() {
@@ -28,8 +24,6 @@ class Chat extends Component {
     axios.get('/api/user')
       .then(res => {
         this.setState({username: sessionStorage.getItem('username')});
-        // TODO: clean up: next two lines are probably not necessary
-        // test during cleanup
         this.setState({ users: res.data });
         console.log(this.state.users);
       })
@@ -54,8 +48,6 @@ class Chat extends Component {
   render() {
     return (
       <div className="container chatbox">
-        {/* <div className="panel panel-default">
-          <div className="panel-heading"> */}
           <div>
           <h1>Chat Messages</h1>
             <ul id="messages"></ul>
@@ -63,7 +55,6 @@ class Chat extends Component {
               <input id="m" onClick={this.handleChatSend} autocomplete="off" /><button>Send</button>
             </form>
           </div>
-        {/* </div> */}
       </div>
     );
   }

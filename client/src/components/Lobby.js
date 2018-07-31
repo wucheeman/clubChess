@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
@@ -23,10 +22,8 @@ class Lobby extends Component {
     axios.get('/api/user')
       .then(res => {
         this.setState({username: sessionStorage.getItem('username')});
-        // TODO: clean up: next two lines are probably not necessary
-        // test during cleanup
         this.setState({ users: res.data });
-        console.log(this.state.users);
+        // console.log(this.state.users);
       })
       .catch((error) => {
         if(error.response.status === 401) {
@@ -34,11 +31,6 @@ class Lobby extends Component {
         }
       });
   }
-
-  // logout = () => {
-  //   sessionStorage.removeItem('jwtToken');
-  //   window.location.reload();
-  // }
 
   render() {
     return (
@@ -54,16 +46,11 @@ class Lobby extends Component {
           </nav>
         </div>
 
-        {/* <div className="container"> */}
           <div className="panel panel-default">
 
             <div className="panel-heading">
               <h2 className="panel-title">
                 Club Lobby &nbsp;
-                {/* TODO: delete during cleanup; get the &nbsp too */}
-                {/* {sessionStorage.getItem('jwtToken') && */}
-                  {/* <button className="btn btn-primary" onClick={this.logout}>Logout</button> */}
-                {/* } */}
               </h2>
               <h6 className='userWelcome'>
                 Welcome, {sessionStorage.getItem('username')}!
@@ -106,7 +93,6 @@ class Lobby extends Component {
 
             </div>
           </div>
-        {/* </div> */}
       </div>
       </Wrapper>
 
@@ -115,26 +101,3 @@ class Lobby extends Component {
 }
 
 export default Lobby;
-
-// Default code
-// import React, { Component } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h1 className="App-title">Welcome to React</h1>
-//         </header>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
-
-// export default App;
