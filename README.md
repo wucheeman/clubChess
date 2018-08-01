@@ -1,4 +1,4 @@
-<p align="center"><img src ="/readme_img/chess-knight.png" alt='chess piece' /></p>
+<p align="center"><img width="112" height="112" src ="/readme_img/chess-knight.png" alt='chess piece' /></p>
 
 # Club Chess
 
