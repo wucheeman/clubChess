@@ -1,4 +1,5 @@
-![chess piece](/readme_img/chess-knight.png)
+<div style="text-align:center"><img src ="/readme_img/chess-knight.png" alt='chess piece' /></div>
+
 # Club Chess
 
 ## What the project does
