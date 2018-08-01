@@ -11,7 +11,7 @@ export default class Gameroom extends React.Component {
 
   constructor(props){
     super(props);
-    console.log('props', props)
+    // console.log('props', props)
     this.state = {
         username: '',
         usersOnline: [],
