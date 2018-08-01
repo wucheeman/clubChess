@@ -1,3 +1,4 @@
+![chess piece](/readme_img/chess-knight.png)
 # Club Chess
 
 ## What the project does
